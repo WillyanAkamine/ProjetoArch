@@ -2,15 +2,13 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-image: url('../Imagens/D5_Scene\ 2_20231219_182917.png');
+    background-image: url('/public/images/home.png');
     background-size: 2000px; /* Para ajustar a imagem sem cortes */
     background-position: center; /* Para centralizar a imagem */
     background-repeat: no-repeat; /* Para evitar repetições */
     margin: 10%;
     padding: 0;
 }
-
-
 
 header {
     background-color: #2c3e50;

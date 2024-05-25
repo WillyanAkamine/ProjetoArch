@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Controllers;
+
+
 use Psr\Http\Message\ServerRequestInterface;
 use League\Plates\Engine;
 
@@ -14,7 +16,9 @@ class HomeController
 
     public function __invoke(ServerRequestInterface $request) {
         return new \Laminas\Diactoros\Response\HtmlResponse(
-            $this->templates->render('Home', ['title' => 'Home Page'])
+            $this->templates->render('Home', [
+                 'user' => $_SESSION["user"]
+            ])
         );
     }
 }

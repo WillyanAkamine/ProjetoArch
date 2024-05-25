@@ -16,6 +16,9 @@ $router = new Router;
 
 $router->map('GET', '/', 'App\Controllers\HomeController');
 
+$router->map('GET', '/login', 'App\Controllers\AuthController');
+$router->map('POST', '/login', 'App\Controllers\AuthController::login');
+
 $response = $router->dispatch($request);
 
 (new SapiEmitter)->emit($response);
