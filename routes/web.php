@@ -19,7 +19,8 @@ $router->map('GET', '/', 'App\Controllers\HomeController');
 $router->map('GET', '/login', 'App\Controllers\AuthController');
 $router->map('POST', '/login', 'App\Controllers\AuthController::login');
 $router->map('GET', '/logout', 'App\Controllers\AuthController::logout');
-
+$router->map('GET', '/obra', 'App\Controllers\ConstructionController');
+$router->map('POST', '/obra', 'App\Controllers\ConstructionController::upload');
 $response = $router->dispatch($request);
 
 (new SapiEmitter)->emit($response);
