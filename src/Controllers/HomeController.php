@@ -17,7 +17,7 @@ class HomeController
     public function __invoke(ServerRequestInterface $request) {
         return new \Laminas\Diactoros\Response\HtmlResponse(
             $this->templates->render('Home', [
-                 'user' => $_SESSION["user"]
+                 'user' => $_SESSION["user"] ?? []
             ])
         );
     }

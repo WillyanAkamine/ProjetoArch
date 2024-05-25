@@ -18,6 +18,7 @@ $router->map('GET', '/', 'App\Controllers\HomeController');
 
 $router->map('GET', '/login', 'App\Controllers\AuthController');
 $router->map('POST', '/login', 'App\Controllers\AuthController::login');
+$router->map('GET', '/logout', 'App\Controllers\AuthController::logout');
 
 $response = $router->dispatch($request);
 
