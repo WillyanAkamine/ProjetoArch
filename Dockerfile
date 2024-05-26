@@ -12,6 +12,8 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql
 
 RUN a2enmod rewrite
 
+RUN echo "alias doctrine='.vendor/bin/doctrine-migrations'" >> ~/.bashrc
+
 COPY . /var/www/html/
 
 RUN chown -R www-data:www-data /var/www/html
