@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240526014109 extends AbstractMigration
+final class Version20240526152057 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -19,13 +19,15 @@ final class Version20240526014109 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $this->addSql ("CREATE TABLE IF NOT EXISTS `notes` (
+        $this->addSql("CREATE TABLE IF NOT EXISTS `construction` (
             `id` int NOT NULL AUTO_INCREMENT,
+            `title` varchar(100) NOT NULL,
             `description` text,
-            `value` decimal(10,2) DEFAULT NULL,
-            `status` enum('Paga','Em Aberto') DEFAULT 'Em Aberto',
+            `progress` int DEFAULT NULL,
+            `picture` varchar(255) DEFAULT NULL,
+            `report` text,
             PRIMARY KEY (`id`),
-            KEY `ObraID` (`id`)
+            KEY `id` (`id`)
           ) ENGINE=MyISAM");
 
     }

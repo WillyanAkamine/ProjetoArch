@@ -5,7 +5,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Laminas\Diactoros\Response\HtmlResponse;
 use League\Plates\Engine;
 
-class ConstructionController {
+class CostController {
     private $templates;
 
     public function __construct(){
@@ -14,7 +14,7 @@ class ConstructionController {
 
     public function __invoke(ServerRequestInterface $request) {
         return new HtmlResponse(
-            $this->templates->render('Construction', [
+            $this->templates->render('Cost', [
                  'user' => $_SESSION["user"] ?? []
             ])
         );
@@ -28,12 +28,12 @@ class ConstructionController {
         $pdfFile = $uploadedFiles['pdf'] ?? null;
 
         if ($pdfFile && $pdfFile->getError() === UPLOAD_ERR_OK) {
-            $uploadDir = __DIR__ . '/../../storage/Construction/';
+            $uploadDir = __DIR__ . '/../../storage/Cost/';
             $filename = $pdfFile->getClientFilename();
             $pdfFile->moveTo($uploadDir . $filename);
         }
         return new \Laminas\Diactoros\Response\HtmlResponse(
-            $this->templates->render('Construction', [
+            $this->templates->render('Cost', [
                  'user' => $_SESSION["user"] ?? []
             ])
         );

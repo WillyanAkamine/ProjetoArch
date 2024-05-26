@@ -18,8 +18,8 @@
                 <li><a href="/" class="text-blue">Home</a></li>
                 <li><a href="obra">Obra</a></li>
                 <li><a href="orcamento">Orçamento</a></li>
-                <li><a href="">Notas a Pagar</a></li>
-                <li><a href="">Custo de Obra</a></li>
+                <li><a href="notas">Notas a Pagar</a></li>
+                <li><a href="custo">Custo de Obra</a></li>
 
                 <?php if (empty($user)) : ?>
 
