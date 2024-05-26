@@ -24,6 +24,8 @@
         <div id="relatorios-anteriores">
             <h3>Relatórios Anteriores</h3>
             <!-- Aqui você pode listar os relatórios anteriores -->
+            <?php foreach():?>
+            
             <div class="relatorio">
                 <p>Data: 01/01/2024</p>
                 <p>Mão de Obra: R$ 1000</p>

@@ -8,3 +8,4 @@ class Cliente extends Model {
     protected $fillable = ['Nome', 'Email', 'Senha', 'funcao'];
     protected $table = "clientes";
 }
+

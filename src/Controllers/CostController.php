@@ -16,9 +16,12 @@ class CostController {
     }
 
     public function __invoke(ServerRequestInterface $request) {
+        $user = $_SESSION["user"];
+        $costs = $this->cost_model->where($user['id'], "client_id")->get();
         return new HtmlResponse(
             $this->templates->render('Cost', [
-                 'user' => $_SESSION["user"] ?? []
+                 'user' => $user ?? [],
+                 'costs' => $costs
             ])
         );
     }
@@ -27,7 +30,7 @@ class CostController {
         $cost = $request->getParsedBody();
         $this->upload($request->getUploadedFiles());
         $this->cost_model->insert($cost);
-        
+
         return new \Laminas\Diactoros\Response\HtmlResponse(
             $this->templates->render('Cost', [
                  'user' => $_SESSION["user"] ?? []
