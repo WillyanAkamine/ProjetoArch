@@ -14,16 +14,18 @@ final class Version20240526012251 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Custo de obra';
     }
 
     public function up(Schema $schema): void
     {
-        $this->addSql("CREATE TABLE IF NOT EXISTS `cost` (
+        $this->addSql("CREATE TABLE IF NOT EXISTS `costs` (
             `id` int NOT NULL AUTO_INCREMENT,
-            `description` text,
-            `value` decimal(10,2) DEFAULT NULL,
-            `date` date DEFAULT NULL,
+            `labor` decimal(10,2) NOT NULL,  /* mao de obra */
+            `equip` decimal(10,2) NOT NULL, /*Equipamentos*/
+            `third` decimal(10,2) NOT NULL, /*Teceiros*/
+            `adm` decimal(10,2) NOT NULL, /*Taxa ADM*/
+            `date` timestamp DEFAULT NOW(),
             PRIMARY KEY (`id`),
             KEY `id` (`id`)
             ) ENGINE=MyISAM AUTO_INCREMENT=4");

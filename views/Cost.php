@@ -7,13 +7,13 @@
     <section id="custo-da-obra">
         <h2>Custo da Obra</h2>
         <!-- Formulário para adicionar novo relatório de custo -->
-        <form id="relatorio-form" action="processar_relatorio.php" method="POST" enctype="multipart/form-data">
-            <label for="mao-de-obra">Mão de Obra:</label>
-            <input type="number" id="mao-de-obra" name="mao-de-obra" required><br>
-            <label for="equipamentos">Equipamentos:</label>
-            <input type="number" id="equipamentos" name="equipamentos" required><br>
-            <label for="terceiros">Terceiros:</label>
-            <input type="number" id="terceiros" name="terceiros" required><br>
+        <form id="relatorio-form" action="" method="POST" enctype="multipart/form-data">
+            <label for="labor">Mão de Obra:</label>
+            <input type="number" id="labor" name="labor" required><br>
+            <label for="equip">Equipamentos:</label>
+            <input type="number" id="equip" name="equip" required><br>
+            <label for="third">Terceiros:</label>
+            <input type="number" id="third" name="third" required><br>
             <label for="adm">Taxa ADM:</label>
             <input type="number" id="adm" name="adm" required><br>
             <label for="pdf">Relatório:</label>
