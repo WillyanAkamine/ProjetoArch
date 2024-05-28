@@ -8,10 +8,10 @@
     <?php endif; ?>
 
     <form method="POST" action="login">
-        <label for="Nome">Nome:</label>
-        <input type="text" id="Nome" name="Nome" required><br>
-        <label for="Senha">Senha:</label>
-        <input type="password" id="Senha" name="Senha" required><br>
+        <label for="name">Nome:</label>
+        <input type="text" id="name" name="name" required><br>
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password" required><br>
         <button type="submit">Entrar</button>
     </form>
 </section>

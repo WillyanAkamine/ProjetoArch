@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 
 class Cliente extends Model {
-    protected $fillable = ['Nome', 'Email', 'Senha', 'funcao'];
-    protected $table = "clientes";
+    protected $fillable = ['name', 'email', 'password', 'function'];
+    protected $table = "clients";
 }
 

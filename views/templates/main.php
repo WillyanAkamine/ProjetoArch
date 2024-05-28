@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $this->e($title) ?></title>
-    <link rel="stylesheet" href="public/css/style.css" />
-    <script src="public/scripts/tailwind.js"></script>
-    <script src="public/scripts/tailwind-config.js"></script>
+    <link rel="stylesheet" href="/public/css/style.css" />
+    <script src="/public/scripts/tailwind.js"></script>
+    <script src="/public/scripts/tailwind-config.js"></script>
     
 </head>
 
@@ -16,10 +16,10 @@
         <nav>
             <ul>
                 <li><a href="/" class="text-blue">Home</a></li>
-                <li><a href="obra">Obra</a></li>
-                <li><a href="orcamento">Orçamento</a></li>
-                <li><a href="notas">Notas a Pagar</a></li>
-                <li><a href="custo">Custo de Obra</a></li>
+                <li><a href="cliente/obra">Obra</a></li>
+                <li><a href="cliente/orcamento">Orçamento</a></li>
+                <li><a href="cliente/notas">Notas a Pagar</a></li>
+                <li><a href="cliente/custo">Custo de Obra</a></li>
 
                 <?php if (empty($user)) : ?>
 

@@ -28,8 +28,8 @@ class AuthController {
     $cliente_model = new Cliente();
 
     $cliente = $cliente_model->where([
-      "Nome" => $login_info["Nome"], 
-      "Senha" => $login_info["Senha"]
+      "name" => $login_info["name"], 
+      "password" => $login_info["password"]
     ])->first();
  
     $_SESSION["user"] = $cliente->getAttributes();
