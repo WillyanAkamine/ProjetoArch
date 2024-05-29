@@ -67,15 +67,12 @@ class CostController
 
     public function store(ServerRequestInterface $request)
     {
-        $cost = $request->getParsedBody();
+        var_dump($request);
+        $cost = $request->getBody();
         $this->upload($request->getUploadedFiles());
-        $this->cost_model->insert($cost);
+        // $this->cost_model->insert($cost);
 
-        return new HtmlResponse(
-            $this->templates->render('Cost', [
-                'user' => $this->user
-            ])
-        );
+        return ["cost" => $request];
     }
 
     public function upload($uploadedFiles)

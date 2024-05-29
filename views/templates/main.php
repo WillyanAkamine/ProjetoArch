@@ -3,36 +3,39 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $this->e($title) ?></title>
     <link rel="stylesheet" href="/public/css/style.css" />
-    <script src="/public/scripts/tailwind.js"></script>
-    <script src="/public/scripts/tailwind-config.js"></script>
-    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <script src="/public/scripts/axios.min.js"></script>
+
 </head>
 
 <body>
     <header>
-        <nav>
-            <ul>
-                <li><a href="/" class="text-blue">Home</a></li>
-                <li><a href="cliente/obra">Obra</a></li>
-                <li><a href="cliente/orcamento">Orçamento</a></li>
-                <li><a href="cliente/notas">Notas a Pagar</a></li>
-                <li><a href="cliente/custo">Custo de Obra</a></li>
+        <nav class="nav">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link" href="/cliente/obra">Obra</a>
+            <a class="nav-link" href="/cliente/orcamento">Orçamento</a>
+            <a class="nav-link" href="/cliente/notas">Notas a Pagar</a>
+            <a class="nav-link" href="/cliente/custo">Custo de Obra</a>
 
-                <?php if (empty($user)) : ?>
-
-                    <li class="login">
-                        <a href="login">Login</a>
-                    </li>
-
-                <?php else : ?>
-
-                    <li class="logout"><a href="logout">Logout</a></li>
-
-                <?php endif ?>
-            </ul>
+            <?php if (empty($user)) : ?>
+                <a class="nav-link" href="login">Login</a>
+            <?php else : ?>
+                <a class="nav-link" href="logout">Logout</a>
+            <?php endif ?>
+            
+        <!-- <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul> -->
         </nav>
     </header>
 
@@ -41,5 +44,11 @@
     <footer>
 
     </footer>
+
+    <script src="/public/scripts/tailwind.js"></script>
+    <script src="/public/scripts/tailwind-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="/public/scripts/app.js"></script>
 </body>
+
 </html>

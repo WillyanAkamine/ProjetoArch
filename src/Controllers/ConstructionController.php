@@ -21,9 +21,7 @@ class ConstructionController {
     }
 
     public function store(ServerRequestInterface $request) {
-
         $uploadedFiles = $request->getUploadedFiles();
-
 
         $pdfFile = $uploadedFiles['pdf'] ?? null;
 

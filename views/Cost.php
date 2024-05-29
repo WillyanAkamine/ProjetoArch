@@ -2,8 +2,8 @@
 
 <section id="custo-da-obra">
     <h2>Custo da Obra</h2>
-    <!-- Formulário para adicionar novo relatório de custo -->
-    <form id="relatorio-form" action="" method="POST" enctype="multipart/form-data">
+
+    <form id="relatorio-form">
         <label for="labor">Mão de Obra:</label>
         <input type="number" id="labor" name="labor" required><br>
         <label for="equip">Equipamentos:</label>
@@ -16,6 +16,7 @@
         <input type="file" id="pdf" name="pdf" accept=".pdf"><br>
         <button type="submit">Enviar</button>
     </form>
+    
     <div id="relatorios-anteriores">
         <h3>Relatórios Atual</h3>
 
