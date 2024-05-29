@@ -22,9 +22,9 @@
             <a class="nav-link" href="/cliente/custo">Custo de Obra</a>
 
             <?php if (empty($user)) : ?>
-                <a class="nav-link" href="login">Login</a>
+                <a class="nav-link" href="/login">Login</a>
             <?php else : ?>
-                <a class="nav-link" href="logout">Logout</a>
+                <a class="nav-link" href="/logout">Logout</a>
             <?php endif ?>
             
         <!-- <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

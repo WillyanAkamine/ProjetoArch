@@ -5,7 +5,10 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 include __DIR__ . "/../vendor/autoload.php";
 
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 $dotenv = Dotenv::createImmutable(__DIR__ . "/../");
 $dotenv->load();
 

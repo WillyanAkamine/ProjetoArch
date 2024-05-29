@@ -5,7 +5,6 @@ use Laminas\Diactoros\ResponseFactory;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use League\Route\Router;
 use Laminas\Diactoros\ServerRequestFactory;
-use Psr\Http\Message\ServerRequestInterface;
 
 $request = ServerRequestFactory::fromGlobals(
   $_SERVER,
@@ -36,8 +35,8 @@ $strategyJSON = new League\Route\Strategy\JsonStrategy($responseFactory);
 
 $router->group('/api', function ($router) {
   $router->map('POST', '/obra', 'App\Controllers\ConstructionController::store');
-  $router->map('POST','/notas', 'App\Controllers\NotesController::store');
-  $router->map('POST','/custo', 'App\Controllers\CostController::store');
+  $router->map('POST', '/notas', 'App\Controllers\NotesController::store');
+  $router->map('POST', '/custo', 'App\Controllers\CostController::store');
 })->setStrategy($strategyJSON);
 
 
