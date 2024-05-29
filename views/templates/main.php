@@ -15,16 +15,16 @@
 <body>
     <header>
         <nav class="nav">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-            <a class="nav-link" href="/cliente/obra">Obra</a>
-            <a class="nav-link" href="/cliente/orcamento">Orçamento</a>
-            <a class="nav-link" href="/cliente/notas">Notas a Pagar</a>
-            <a class="nav-link" href="/cliente/custo">Custo de Obra</a>
+            <a class="nav-link text-white" aria-current="page" href="#">Home</a>
+            <a class="nav-link text-white" href="/cliente/obra">Obra</a>
+            <a class="nav-link text-white" href="/cliente/orcamento">Orçamento</a>
+            <a class="nav-link text-white" href="/cliente/notas">Notas a Pagar</a>
+            <a class="nav-link text-white" href="/cliente/custo">Custo de Obra</a>
 
             <?php if (empty($user)) : ?>
-                <a class="nav-link" href="/login">Login</a>
+                <a class="nav-link text-white" href="/login">Login</a>
             <?php else : ?>
-                <a class="nav-link" href="/logout">Logout</a>
+                <a class="nav-link text-white" href="/logout">Logout</a>
             <?php endif ?>
             
         <!-- <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
