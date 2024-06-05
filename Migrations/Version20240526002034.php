@@ -14,12 +14,15 @@ final class Version20240526002034 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Migration PDF';
+        return 'PDF';
     }
 
     public function up(Schema $schema): void
     {
-        $this->addSql('CREATE TABLE pdf (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, descricao VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE pdf (
+            id INT AUTO_INCREMENT NOT NULL, 
+            name VARCHAR(255) NOT NULL, PRIMARY KEY(id)
+        )');
         
     }
 

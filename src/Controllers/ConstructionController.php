@@ -1,40 +1,29 @@
 <?php
+
+
 namespace App\Controllers;
 
+use App\Models\Construction;
 use Psr\Http\Message\ServerRequestInterface;
-use Laminas\Diactoros\Response\HtmlResponse;
-use League\Plates\Engine;
 
 class ConstructionController {
-    private $templates;
+    private $construction_model = new Construction();
 
-    public function __construct(){
-        $this->templates = new Engine(__DIR__.'/../../views');
-    }
-
-    public function __invoke(ServerRequestInterface $request) {
-        return new HtmlResponse(
-            $this->templates->render('Construction', [
-                 'user' => $_SESSION["user"] ?? []
-            ])
-        );
+    public function __invoke() {
+        return render('Construction');
     }
 
     public function store(ServerRequestInterface $request) {
-        $uploadedFiles = $request->getUploadedFiles();
+        upload($request->getUploadedFiles(), 'pdf', 'Construction');
 
-        $pdfFile = $uploadedFiles['pdf'] ?? null;
-
-        if ($pdfFile && $pdfFile->getError() === UPLOAD_ERR_OK) {
-            $uploadDir = __DIR__ . '/../../storage/Construction/';
-            $filename = $pdfFile->getClientFilename();
-            $pdfFile->moveTo($uploadDir . $filename);
+        $form_data = $request->getParsedBody();
+        
+        $inserted = $this->construction_model->insert($form_data);
+        
+        if(!$inserted) {
+            return ["message" => "Ocorreu um erro interno", "statusCode" => 400];
         }
-        return new \Laminas\Diactoros\Response\HtmlResponse(
-            $this->templates->render('Construction', [
-                 'user' => $_SESSION["user"] ?? []
-            ])
-        );
 
+        return ["message" => "Construção criada com sucesso", "statusCode" => 201];
     }
 }

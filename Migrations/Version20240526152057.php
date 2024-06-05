@@ -14,21 +14,18 @@ final class Version20240526152057 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'OBRA';
     }
 
     public function up(Schema $schema): void
     {
         $this->addSql("CREATE TABLE IF NOT EXISTS `construction` (
             `id` int NOT NULL AUTO_INCREMENT,
-            `title` varchar(100) NOT NULL,
             `description` text,
             `progress` int DEFAULT NULL,
-            `picture` varchar(255) DEFAULT NULL,
-            `report` text,
             PRIMARY KEY (`id`),
             KEY `id` (`id`)
-          ) ENGINE=MyISAM");
+          )");
 
     }
 

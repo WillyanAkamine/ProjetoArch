@@ -14,7 +14,7 @@ final class Version20240526152349 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'ORÇAMENTO';
     }
 
     public function up(Schema $schema): void
@@ -25,7 +25,7 @@ final class Version20240526152349 extends AbstractMigration
             `description` text,
             PRIMARY KEY (`id`),
             KEY `id` (`id`)
-          ) ENGINE=MyISAM");
+          )");
 
     }
 

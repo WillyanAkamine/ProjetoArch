@@ -17,19 +17,16 @@ class CostController
   public function __construct()
   {
     $this->cost_model = new Cost();
-    $this->templates = new Engine(__DIR__ . '/../../views');
     $this->user = $_SESSION["user"];
   }
 
   public function __invoke()
   {
-    return new HtmlResponse(
-      $this->templates->render('Cost', [
-        'user' => $this->user,
-        'last_cost' => $this->getLastCost()->getAttributes(),
-        'total' => $this->calcCost()
-      ])
-    );
+    return render(
+    'Cost', [
+      'last_cost' => $this->getLastCost()->getAttributes(),
+      'total' => $this->calcCost()
+    ]);
   }
 
   private function getCosts()

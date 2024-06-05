@@ -14,7 +14,7 @@ final class Version20240526014109 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'NOTAS A PAGAR';
     }
 
     public function up(Schema $schema): void
@@ -26,7 +26,7 @@ final class Version20240526014109 extends AbstractMigration
             `status` enum('Paga','Em Aberto') DEFAULT 'Em Aberto',
             PRIMARY KEY (`id`),
             KEY `ObraID` (`id`)
-          ) ENGINE=MyISAM");
+          )");
 
     }
 

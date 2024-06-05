@@ -14,7 +14,7 @@ final class Version20240526012251 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Custo de obra';
+        return 'CUSTO DE OBRA';
     }
 
     public function up(Schema $schema): void
@@ -30,7 +30,7 @@ final class Version20240526012251 extends AbstractMigration
             FOREIGN KEY (`client_id`) REFERENCES clients(`id`),
             PRIMARY KEY (`id`),
             KEY `id` (`id`)
-            ) ENGINE=MyISAM AUTO_INCREMENT=4");
+        )");
     }
 
     public function down(Schema $schema): void

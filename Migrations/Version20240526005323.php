@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Migrations;
 
@@ -14,11 +12,12 @@ final class Version20240526005323 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'CLIENTES';
     }
 
     public function up(Schema $schema): void
     {
+        //TODO: CRIPTOGRAFAR SENHA
         $this->addSql("CREATE TABLE IF NOT EXISTS `clients` (
             `id` int NOT NULL AUTO_INCREMENT,
             `name` varchar(100) NOT NULL,
@@ -27,7 +26,7 @@ final class Version20240526005323 extends AbstractMigration
             `function` int DEFAULT NULL,
             PRIMARY KEY (`id`),
             UNIQUE KEY `email` (`email`)
-          ) ENGINE=MyISAM AUTO_INCREMENT=4");
+        )");
 
     }
 
