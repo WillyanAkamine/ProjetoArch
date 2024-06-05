@@ -1,12 +1,9 @@
 <?php $this->layout('templates/main', ['title' => 'Home Page', 'user' => $user]) ?>
 
-
-
 <section id="obra-details">
     <h2 class="py-[20px] text-bold">Detalhes da Obra</h2>
 
-    <!-- Formulário para adicionar novas atualizações -->
-    <form id="atualizacao-form" enctype="multipart/form-data" action="obra" method="POST">
+    <form id="construction-form" enctype="multipart/form-data">
         <div class="form-floating">
             <textarea class="form-control" placeholder="Leave a comment here" id="description" name="description"></textarea>
             <label for="description">Descrição</label>
@@ -20,7 +17,6 @@
         <button type="submit">Enviar</button>
     </form>
 
-    <!-- Seção para exibir arquivos disponíveis -->
     <div id="arquivos-disponiveis">
         <h3 class="mb-[20px]">Relatórios Disponíveis</h3>
         <ul class="h-[300px] overflow-y-auto">

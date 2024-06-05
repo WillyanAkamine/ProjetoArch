@@ -3,10 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\Cost;
-use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Laminas\Diactoros\Response\HtmlResponse;
-use League\Plates\Engine;
+use function App\Utils\render;
 
 class CostController
 {

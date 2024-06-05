@@ -1,13 +1,20 @@
 <?php
 
-
 namespace App\Controllers;
 
 use App\Models\Construction;
 use Psr\Http\Message\ServerRequestInterface;
 
+use function App\Utils\render;
+use function App\Utils\upload;
+
 class ConstructionController {
-    private $construction_model = new Construction();
+    private Construction $construction_model;
+
+    public function __construct() 
+    {
+        $this->construction_model = new Construction();
+    }
 
     public function __invoke() {
         return render('Construction');
