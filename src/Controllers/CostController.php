@@ -3,12 +3,11 @@
 namespace App\Controllers;
 
 use App\Models\Cost;
+use App\Utils\Render;
 use Psr\Http\Message\ServerRequestInterface;
-use function App\Utils\render;
 
 class CostController
 {
-  private $templates;
   private $cost_model;
   private $user;
 
@@ -20,16 +19,22 @@ class CostController
 
   public function __invoke()
   {
-    return render(
+    return Render::render(
     'Cost', [
-      'last_cost' => $this->getLastCost()->getAttributes(),
+      'last_cost' => $this->getLastCost(),
       'total' => $this->calcCost()
     ]);
   }
 
   private function getCosts()
   {
-    return $this->cost_model->orderBy('date', 'DESC')->where("client_id", $this->user['id'])->get();
+    $costs = $this->cost_model->orderBy('date', 'DESC')->where("client_id", $this->user['id'])->get();
+    
+    if (!$costs){
+      return [];
+    }
+
+    return $costs;
   }
 
   private function calcCost()
@@ -56,9 +61,22 @@ class CostController
 
   private function getLastCost()
   {
-    return $this->cost_model->where("client_id", $this->user['id'])
+    $last_cost = $this->cost_model->where("client_id", $this->user['id'])
       ->orderBy('date', 'DESC')
       ->first();
+
+    if(!$last_cost){
+      return [
+        'date' => null,
+        'labor' => 0,
+        'equip' => 0,
+        'third' => 0,
+        'adm' => 0,
+        'total' => 0
+      ];
+    }
+
+    return $last_cost;
   }
 
   public function store(ServerRequestInterface $request)
@@ -73,6 +91,7 @@ class CostController
      return ["message" => "Sucesso ao savar o custo de obra!"];
   }
 
+  //TODO: USE UTIL UPLOAD CLASS
   public function upload($uploadedFiles)
   {
 

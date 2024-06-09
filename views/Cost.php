@@ -1,5 +1,6 @@
 <?php $this->layout('templates/main', ['title' => 'Home Page', 'user' => $user]) ?>
 
+
 <section id="custo-da-obra">
   <h2>Custo da Obra</h2>
 
@@ -55,4 +56,7 @@
   </div>
 
 </section>
-<button onclick="window.history.back()">Voltar</button>
+
+<?php $this->push('scripts') ?>
+    <script src="/public/scripts/Cost.js"></script>
+<?php $this->end() ?>

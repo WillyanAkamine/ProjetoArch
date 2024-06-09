@@ -3,7 +3,7 @@
 <section id="obra-details">
     <h2 class="py-[20px] text-bold">Detalhes da Obra</h2>
 
-    <form id="construction-form" enctype="multipart/form-data">
+    <form id="construction-form">
         <div class="form-floating">
             <textarea class="form-control" placeholder="Leave a comment here" id="description" name="description"></textarea>
             <label for="description">Descrição</label>
@@ -26,3 +26,7 @@
         </ul>
     </div>
 </section>
+
+<?php $this->push('scripts') ?>
+    <script src="/public/scripts/Construction.js"></script>
+<?php $this->end() ?>

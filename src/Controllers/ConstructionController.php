@@ -3,10 +3,9 @@
 namespace App\Controllers;
 
 use App\Models\Construction;
+use App\Utils\File;
+use App\Utils\Render;
 use Psr\Http\Message\ServerRequestInterface;
-
-use function App\Utils\render;
-use function App\Utils\upload;
 
 class ConstructionController {
     private Construction $construction_model;
@@ -17,11 +16,11 @@ class ConstructionController {
     }
 
     public function __invoke() {
-        return render('Construction');
+        return Render::render('Construction');
     }
 
     public function store(ServerRequestInterface $request) {
-        upload($request->getUploadedFiles(), 'pdf', 'Construction');
+        File::upload($request->getUploadedFiles(), 'pdf', 'Construction');
 
         $form_data = $request->getParsedBody();
         
