@@ -1,7 +1,7 @@
 const URL = 'http://localhost/api';
 
-const saveConstruction = async(formData) => {
-    fetch(`${URL}/obra`, {
+const saveNotes = async(formData) => {
+    fetch(`${URL}/notas`, {
       method: 'POST',
       body: formData
     })
@@ -13,11 +13,11 @@ const saveConstruction = async(formData) => {
       .catch(response => console.log(response))
   }
   
-  document.getElementById('construction-form').addEventListener('submit', async function(event) {
+  document.getElementById('notes-form').addEventListener('submit', async function(event) {
     event.preventDefault();
   
     const form = event.target;
     const formData = new FormData(form);
   
-    await saveConstruction(formData);
+    await saveNotes(formData);
   });

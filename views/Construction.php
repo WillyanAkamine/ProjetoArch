@@ -1,15 +1,15 @@
 <?php $this->layout('templates/main', ['title' => 'Home Page', 'user' => $user]) ?>
 
-<section id="obra-details">
-    <h2 class="py-[20px] text-bold">Detalhes da Obra</h2>
+<section id="obra-details" class="container my-5">
+    <h2 class="py-4 font-bold">Detalhes da Obra</h2>
 
     <form id="construction-form">
-        <div class="form-floating">
+        <div class="mb-3">
             <textarea class="form-control" placeholder="Leave a comment here" id="description" name="description"></textarea>
             <label for="description">Descrição</label>
         </div>
 
-        <div>
+        <div class="mb-3"> 
             <label for="pdf" class="form-label">Documentos</label>
             <input class="form-control form-control-lg" type="file" id="pdf" name="pdf" multiple><br>
         </div>
@@ -20,9 +20,13 @@
     <div id="arquivos-disponiveis">
         <h3 class="mb-[20px]">Relatórios Disponíveis</h3>
         <ul class="h-[300px] overflow-y-auto">
-            <li><a class="btn btn-outline-dark mb-[5px]" href="caminho/do/arquivo1.pdf" target="_blank">Arquivo 1</a></li>
-            <li><a class="btn btn-outline-dark mb-[5px]" href="caminho/do/arquivo2.pdf" target="_blank">Arquivo 2</a></li>
-            <li><a class="btn btn-outline-dark mb-[5px]" href="caminho/do/arquivo3.pdf" target="_blank">Arquivo 3</a></li>
+            <?php foreach($documents as $document): ?>
+                <div class="mb-3">
+                <li>
+                    <a class="btn btn-outline-dark mb-[5px]" target="_blank" href="/pdf/Construction/<?=$document->name?>" target="_blank"> <?=$document->name?> </a>
+                </li>
+                </div>
+            <?php endforeach?>
         </ul>
     </div>
 </section>

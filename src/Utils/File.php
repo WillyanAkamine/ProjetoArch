@@ -1,10 +1,8 @@
 <?php
 
-
 namespace App\Utils;
 
 use App\Models\PDF;
-use Error;
 
 abstract class File
 {
@@ -22,7 +20,7 @@ abstract class File
         $pdf_model = new PDF();
         $pdfFile = $uploadedFiles[$form_field] ?? null;
         $uploadDir = __DIR__ . "/../../storage/{$path_name}/{$_SESSION['user']['id']}";
-        $time_now = round(microtime(true) * 1000);
+        $time_now = round(microtime(true));
 
         self::createDir(__DIR__ . "/../../storage/{$path_name}");
         self::createDir($uploadDir);        
@@ -30,11 +28,12 @@ abstract class File
         if (is_array($pdfFile)) {
             foreach ($pdfFile as $pdf) {
                 if ($pdf && $pdf->getError() === UPLOAD_ERR_OK) {
-                    $filename = $time_now . $pdf->getClientFilename();
+                    $filename = Formater::kebab($time_now . $pdf->getClientFilename());
                     $pdf->moveTo("{$uploadDir}/{$filename}");
 
                     $pdf_model->insert([
-                        "name" => $filename
+                        "name" => $filename,
+                        "client_id" => $_SESSION['user']['id']
                     ]);
                 }
             }
@@ -43,11 +42,12 @@ abstract class File
         }
 
         if ($pdfFile && $pdfFile->getError() === UPLOAD_ERR_OK) {
-            $filename = $time_now . $pdfFile->getClientFilename();
-            $pdfFile->moveTo("{$uploadDir}/{$time_now}{$filename}");
+            $filename = Formater::kebab($time_now . $pdfFile->getClientFilename());
+            $pdfFile->moveTo("{$uploadDir}/{$filename}");
 
             $pdf_model->insert([
-                "name" => $filename
+                "name" => $filename,
+                "client_id" => $_SESSION['user']['id']
             ]);
         }
     }

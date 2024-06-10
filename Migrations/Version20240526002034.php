@@ -21,7 +21,9 @@ final class Version20240526002034 extends AbstractMigration
     {
         $this->addSql('CREATE TABLE pdf (
             id INT AUTO_INCREMENT NOT NULL, 
-            name VARCHAR(255) NOT NULL, PRIMARY KEY(id)
+            name VARCHAR(255) NOT NULL, PRIMARY KEY(id),
+            client_id INT,
+            FOREIGN KEY (`client_id`) REFERENCES clients(`id`)
         )');
         
     }

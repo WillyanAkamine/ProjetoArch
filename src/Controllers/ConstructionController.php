@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Construction;
+use App\Models\PDF;
 use App\Utils\File;
 use App\Utils\Render;
 use Psr\Http\Message\ServerRequestInterface;
@@ -16,7 +17,8 @@ class ConstructionController {
     }
 
     public function __invoke() {
-        return Render::render('Construction');
+        $documents = PDF::where('client_id', $_SESSION['user']['id'])->get();
+        return Render::render('Construction', ['documents' => $documents]);
     }
 
     public function store(ServerRequestInterface $request) {

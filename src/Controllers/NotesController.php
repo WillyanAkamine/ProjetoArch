@@ -1,43 +1,37 @@
 <?php
+
 namespace App\Controllers;
 
+use App\Models\Notes;
+use App\Models\PDF;
+use App\Utils\File;
+use App\Utils\Render;
 use Psr\Http\Message\ServerRequestInterface;
-use Laminas\Diactoros\Response\HtmlResponse;
-use League\Plates\Engine;
 
 class NotesController {
-    private $templates;
+    private Notes $notes_model;
 
-    public function __construct(){
-        $this->templates = new Engine(__DIR__.'/../../views');
+    public function __construct() 
+    {
+        $this->notes_model = new Notes();
     }
 
-    public function __invoke(ServerRequestInterface $request) {
-        return new HtmlResponse(
-            $this->templates->render('Notes', [
-                 'user' => $_SESSION["user"] ?? []
-            ])
-        );
+    public function __invoke() {
+        $documents = PDF::where('client_id', $_SESSION['user']['id'])->get();
+        return Render::render('Notes', ['documents' => $documents]);
     }
 
     public function store(ServerRequestInterface $request) {
+        File::upload($request->getUploadedFiles(), 'pdf', 'Notes');
 
-        $uploadedFiles = $request->getUploadedFiles();
-
-
-        $pdfFile = $uploadedFiles['pdf'] ?? null;
-
-        if ($pdfFile && $pdfFile->getError() === UPLOAD_ERR_OK) {
-            $uploadDir = __DIR__ . '/../../storage/Notes/';
-            $filename = $pdfFile->getClientFilename();
-            $pdfFile->moveTo($uploadDir . $filename);
+        $form_data = $request->getParsedBody();
+        
+        $inserted = $this->notes_model->insert($form_data);
+        
+        if(!$inserted) {
+            return ["message" => "Ocorreu um erro interno", "statusCode" => 400];
         }
-        return new \Laminas\Diactoros\Response\HtmlResponse(
-            $this->templates->render('Notes', [
-                 'user' => $_SESSION["user"] ?? []
-            ])
-        );
 
+        return ["message" => "Nota criada com sucesso", "statusCode" => 201];
     }
 }
-
