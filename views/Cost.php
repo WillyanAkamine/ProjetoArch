@@ -1,7 +1,7 @@
 <?php $this->layout('templates/main', ['title' => 'Home Page', 'user' => $user]) ?>
 
 
-<section id="custo-da-obra">
+<section id="custo-da-obra" class="container my-5">
   <h2>Custo da Obra</h2>
 
   <form id="cost-form">
@@ -29,8 +29,18 @@
       <label for="pdf" class="form-label">Relatório:</label>
       <input type="file" class="form-control" id="pdf" name="pdf" placeholder="100">
     </div>
-
-    <button type="submit">Enviar</button>
+    <div id="arquivos-disponiveis">
+        <h3 class="mb-[20px]">Relatórios Disponíveis</h3>
+        <ul class="h-[300px] overflow-y-auto">
+            <?php foreach($documents as $document): ?>
+                <div class="mb-3">
+                <li>
+                    <a class="btn btn-outline-dark mb-[5px]" target="_blank" href="/pdf/Cost/<?=$document->name?>" target="_blank"> <?=$document->name?> </a>
+                </li>
+                </div>
+            <?php endforeach?>
+        </ul>
+    </div>
   </form>
 
   <div id="relatorios-anteriores">
