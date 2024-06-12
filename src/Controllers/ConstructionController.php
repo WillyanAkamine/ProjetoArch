@@ -34,10 +34,7 @@ class ConstructionController {
 
     public function store(ServerRequestInterface $request, array $args) {
         File::upload($request->getUploadedFiles(), 'pdf', 'Construction', $args['client_id']);
-
-        $form_data = $request->getParsedBody();
-        
-        $inserted = $this->construction_model->insert($form_data);
+        $inserted = $this->construction_model->insert($request->getParsedBody());
         
         if(!$inserted) {
             return ["message" => "Ocorreu um erro interno", "statusCode" => 400];

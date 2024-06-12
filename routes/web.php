@@ -50,6 +50,7 @@ $router->group('/', function ($router) {
   $router->map('GET', '/nota/{client_id}', 'App\Controllers\NotesController::show');
 
   $router->map('GET', '/custos', 'App\Controllers\CostController');
+  $router->map('GET', '/custo/{client_id}', 'App\Controllers\CostController::show');
 })->middleware(new AuthMiddleware);
 
 

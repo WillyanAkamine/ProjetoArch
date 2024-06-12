@@ -8,12 +8,12 @@
         <input class="form-control form-control-lg" hidden type="text" id="user_id" name="user_id" value="<?= $client_id ?>">
 
         <div class="mb-3">
-            <textarea class="form-control" placeholder="Leave a comment here" id="description" name="description"></textarea>
-            <label for="description">Descrição</label>
-        </div>
+    <textarea class="form-control w-100" placeholder="Adicione uma descrição" id="description" name="description" rows="7"></textarea>
+</div>
 
-        <div class="mb-3"> 
-            <label for="pdf" class="form-label">Documentos</label>
+
+        <div class="mb-3">
+            <label for="pdf" class="form-label">Upload PDF</label>
             <input class="form-control form-control-lg" type="file" id="pdf" name="pdf" multiple><br>
         </div>
 
@@ -23,17 +23,17 @@
     <div id="arquivos-disponiveis">
         <h3 class="mb-[20px]">Relatórios Disponíveis</h3>
         <ul class="h-[300px] overflow-y-auto">
-            <?php foreach($documents as $document): ?>
+            <?php foreach ($documents as $document) : ?>
                 <div class="mb-3">
                     <li>
-                        <a class="btn btn-outline-dark mb-[5px]" target="_blank" href="/pdf/Construction/<?=$document->name?>" target="_blank"> <?=$document->name?> </a>
+                        <a class="btn btn-outline-dark mb-[5px]" target="_blank" href="/pdf/Construction/<?= $document->name ?>" target="_blank"> <?= $document->name ?> </a>
                     </li>
                 </div>
-            <?php endforeach?>
+            <?php endforeach ?>
         </ul>
     </div>
 </section>
 
 <?php $this->push('scripts') ?>
-    <script src="/public/scripts/Construction.js"></script>
+<script src="/public/scripts/Construction.js"></script>
 <?php $this->end() ?>

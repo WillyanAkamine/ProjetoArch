@@ -40,9 +40,9 @@
 
     <?= $this->section('content') ?>
 
-    <footer>
+    <!-- <footer>
 
-    </footer>
+    </footer> -->
 
     <script src="/public/scripts/tailwind.js"></script>
     <script src="/public/scripts/tailwind-config.js"></script>

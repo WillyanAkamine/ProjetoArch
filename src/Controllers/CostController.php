@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Models\Cost;
 use App\Utils\Render;
 use App\Models\PDF;
+use App\Models\User;
+use App\Utils\File;
 use Psr\Http\Message\ServerRequestInterface;
 
 class CostController
@@ -20,12 +22,19 @@ class CostController
 
   public function __invoke()
   {
-    $documents = PDF::where('user_id', $_SESSION['user']['id'])->get();
+    $users = User::where('role_id', 2)->get();
+    return Render::render('Cost/Index', ["users" => $users]);
+  }
 
-    return Render::render('Cost/Index', [
+  public function show($request, array $args){
+    $client_id = $args['client_id'];  
+    $documents = $documents = PDF::where(['user_id' => $client_id, 'category' => 'Cost'])->get();
+
+    return Render::render('Cost/Show', [
       'documents' => $documents, 
       'last_cost' => $this->getLastCost(),
-      'total' => $this->calcCost()
+      'total' => $this->calcCost(),
+      "client_id" => $client_id
     ]);
   }
 
@@ -83,28 +92,15 @@ class CostController
     return $last_cost;
   }
 
-  public function store(ServerRequestInterface $request)
+  public function store(ServerRequestInterface $request, array $args)
   {
-    $this->upload($request->getUploadedFiles());
-    $saved = $this->cost_model->insert([...$request->getParsedBody(), "user_id" => $this->user['id']]);
+    File::upload($request->getUploadedFiles(), 'pdf', 'Cost', $args['client_id']);
+    $inserted = $this->cost_model->insert($request->getParsedBody());
 
-    if (!$saved) {
+    if (!$inserted) {
       return ["message" => "Erro ao deletar!"];
     }
 
-    return ["message" => "Sucesso ao savar o custo de obra!"];
-  }
-
-  //TODO: USE UTIL UPLOAD CLASS
-  public function upload($uploadedFiles)
-  {
-
-    $pdfFile = $uploadedFiles['pdf'] ?? null;
-
-    if ($pdfFile && $pdfFile->getError() === UPLOAD_ERR_OK) {
-      $uploadDir = __DIR__ . '/../../storage/Cost/' . $this->user['id'];
-      $filename = $pdfFile->getClientFilename();
-      $pdfFile->moveTo($uploadDir . $filename);
-    }
+    return ["message" => "Sucesso ao salvar o relatorio de custo da obra!"];
   }
 }
