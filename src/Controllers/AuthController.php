@@ -2,32 +2,23 @@
 
 namespace App\Controllers;
 
-
-use App\Models\Cliente;
-use League\Plates\Engine;
+use App\Models\User;
+use App\Utils\Render;
 use Psr\Http\Message\ServerRequestInterface;
-use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 
 class AuthController {
-  private $templates;
-    
-  public function __construct() {
-      $this->templates = new Engine(__DIR__.'/../../views');
-  }
-
-  public function __invoke(ServerRequestInterface $request) {
-      return new HtmlResponse(
-          $this->templates->render('Login', ['title' => 'Login Page'])
-      );
+  
+  public function __invoke() {  
+      return Render::render('Login');
   }
 
   public function login(ServerRequestInterface $request) {
     $login_info = $request->getParsedBody();
 
-    $cliente_model = new Cliente();
+    $user = new User();
 
-    $cliente = $cliente_model->where([
+    $cliente = $user->where([
       "name" => $login_info["name"], 
       "password" => $login_info["password"]
     ])->first();

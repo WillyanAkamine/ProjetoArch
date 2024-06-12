@@ -1,7 +1,9 @@
 const URL = 'http://localhost/api';
 
 const saveCost = async (formData) => {
-    fetch(`${URL}/custo`, {
+    const client_id = formData.get('client_id');
+
+    fetch(`${URL}/custo/${client_id}`, {
       method: 'POST',
       body: formData
     })

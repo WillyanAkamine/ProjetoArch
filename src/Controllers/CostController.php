@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Cost;
 use App\Utils\Render;
+use App\Models\PDF;
 use Psr\Http\Message\ServerRequestInterface;
 
 class CostController
@@ -19,18 +20,21 @@ class CostController
 
   public function __invoke()
   {
-    return Render::render(
-    'Cost', [
+    $documents = PDF::where('user_id', $_SESSION['user']['id'])->get();
+
+    return Render::render('Cost/Index', [
+      'documents' => $documents, 
       'last_cost' => $this->getLastCost(),
       'total' => $this->calcCost()
     ]);
   }
 
+
   private function getCosts()
   {
-    $costs = $this->cost_model->orderBy('date', 'DESC')->where("client_id", $this->user['id'])->get();
-    
-    if (!$costs){
+    $costs = $this->cost_model->orderBy('date', 'DESC')->where("user_id", $this->user['id'])->get();
+
+    if (!$costs) {
       return [];
     }
 
@@ -61,11 +65,11 @@ class CostController
 
   private function getLastCost()
   {
-    $last_cost = $this->cost_model->where("client_id", $this->user['id'])
+    $last_cost = $this->cost_model->where("user_id", $this->user['id'])
       ->orderBy('date', 'DESC')
       ->first();
 
-    if(!$last_cost){
+    if (!$last_cost) {
       return [
         'date' => null,
         'labor' => 0,
@@ -82,13 +86,13 @@ class CostController
   public function store(ServerRequestInterface $request)
   {
     $this->upload($request->getUploadedFiles());
-    $saved = $this->cost_model->insert([...$request->getParsedBody(), "client_id" => $this->user['id']]);
+    $saved = $this->cost_model->insert([...$request->getParsedBody(), "user_id" => $this->user['id']]);
 
-    if(!$saved){
+    if (!$saved) {
       return ["message" => "Erro ao deletar!"];
     }
 
-     return ["message" => "Sucesso ao savar o custo de obra!"];
+    return ["message" => "Sucesso ao savar o custo de obra!"];
   }
 
   //TODO: USE UTIL UPLOAD CLASS

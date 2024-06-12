@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Notes;
 use App\Models\PDF;
+use App\Models\User;
 use App\Utils\File;
 use App\Utils\Render;
 use Psr\Http\Message\ServerRequestInterface;
@@ -17,12 +18,23 @@ class NotesController {
     }
 
     public function __invoke() {
-        $documents = PDF::where('client_id', $_SESSION['user']['id'])->get();
-        return Render::render('Notes', ['documents' => $documents]);
+        $users = User::where('role_id', 2)->get();
+        return Render::render('Notes/Index', ["users" => $users]);
     }
 
-    public function store(ServerRequestInterface $request) {
-        File::upload($request->getUploadedFiles(), 'pdf', 'Notes');
+    public function show($request, array $args) {     
+        $client_id = $args['client_id'];   
+        $documents = PDF::where(['user_id' => $client_id, 'category' => 'Notes'])->get();
+
+        return Render::render('Notes/Show', [
+            "documents" => $documents, 
+            "client_id" => $client_id
+        ]);
+    }
+
+    public function store(ServerRequestInterface $request, array $args) {
+        $client_id = $args['client_id'];
+        File::upload($request->getUploadedFiles(), 'pdf', 'Notes', $client_id);
 
         $form_data = $request->getParsedBody();
         

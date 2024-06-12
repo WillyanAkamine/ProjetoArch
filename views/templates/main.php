@@ -14,11 +14,11 @@
 <body>
     <header>
         <nav class="nav">
-            <a class="nav-link text-white" aria-current="page" href="#">Home</a>
-            <a class="nav-link text-white" href="/cliente/obra">Obra</a>
-            <a class="nav-link text-white" href="/cliente/orcamento">Orçamento</a>
-            <a class="nav-link text-white" href="/cliente/notas">Notas a Pagar</a>
-            <a class="nav-link text-white" href="/cliente/custo">Custo de Obra</a>
+            <a class="nav-link text-white" href="/">Home</a>
+            <a class="nav-link text-white" href="/obras">Obras</a>
+            <a class="nav-link text-white" href="/orcamentos">Orçamentos</a>
+            <a class="nav-link text-white" href="/notas">Notas a Pagar</a>
+            <a class="nav-link text-white" href="/custos">Custos de Obra</a>
 
             <?php if (empty($user)) : ?>
                 <a class="nav-link text-white" href="/login">Login</a>

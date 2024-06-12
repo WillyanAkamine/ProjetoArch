@@ -24,8 +24,9 @@ final class Version20240526014109 extends AbstractMigration
             `description` text,
             `value` decimal(10,2) DEFAULT NULL,
             `status` enum('Paga','Em Aberto') DEFAULT 'Em Aberto',
+            `user_id` int NOT NULL,
             PRIMARY KEY (`id`),
-            KEY `ObraID` (`id`)
+            FOREIGN KEY (`user_id`) REFERENCES users (`id`)
           )");
 
     }

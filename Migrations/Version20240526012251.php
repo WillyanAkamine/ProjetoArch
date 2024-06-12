@@ -26,10 +26,9 @@ final class Version20240526012251 extends AbstractMigration
             `third` decimal(10,2) NOT NULL, /*Teceiros*/
             `adm` decimal(10,2) NOT NULL, /*Taxa ADM*/
             `date` timestamp DEFAULT NOW(),
-            `client_id` int NOT NULL,
-            FOREIGN KEY (`client_id`) REFERENCES clients(`id`),
-            PRIMARY KEY (`id`),
-            KEY `id` (`id`)
+            `user_id` int NOT NULL,
+            FOREIGN KEY (`user_id`) REFERENCES users(`id`),
+            PRIMARY KEY (`id`)
         )");
     }
 

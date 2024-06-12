@@ -1,7 +1,9 @@
 const URL = 'http://localhost/api';
 
 const saveNotes = async(formData) => {
-    fetch(`${URL}/notas`, {
+  const client_id = formData.get('user_id');
+
+  fetch(`${URL}/notas/${client_id}`, {
       method: 'POST',
       body: formData
     })

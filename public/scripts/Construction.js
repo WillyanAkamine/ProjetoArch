@@ -1,7 +1,9 @@
 const URL = 'http://localhost/api';
 
 const saveConstruction = async(formData) => {
-    fetch(`${URL}/obra`, {
+    const client_id = formData.get('user_id');
+
+    fetch(`${URL}/obra/${client_id}`, {
       method: 'POST',
       body: formData
     })
@@ -21,3 +23,6 @@ const saveConstruction = async(formData) => {
   
     await saveConstruction(formData);
   });
+
+
+  

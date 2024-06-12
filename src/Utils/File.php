@@ -15,11 +15,11 @@ abstract class File
         return;
     }
 
-    static function upload($uploadedFiles, string $form_field, string $path_name)
+    static function upload($uploadedFiles, string $form_field, string $path_name, int $client_id)
     {
         $pdf_model = new PDF();
         $pdfFile = $uploadedFiles[$form_field] ?? null;
-        $uploadDir = __DIR__ . "/../../storage/{$path_name}/{$_SESSION['user']['id']}";
+        $uploadDir = __DIR__ . "/../../storage/{$path_name}/{$client_id}";
         $time_now = round(microtime(true));
 
         self::createDir(__DIR__ . "/../../storage/{$path_name}");
@@ -33,7 +33,8 @@ abstract class File
 
                     $pdf_model->insert([
                         "name" => $filename,
-                        "client_id" => $_SESSION['user']['id']
+                        "user_id" => $client_id,
+                        "category" => $path_name
                     ]);
                 }
             }
@@ -47,7 +48,8 @@ abstract class File
 
             $pdf_model->insert([
                 "name" => $filename,
-                "client_id" => $_SESSION['user']['id']
+                "user_id" => $client_id,
+                "category" => $path_name
             ]);
         }
     }

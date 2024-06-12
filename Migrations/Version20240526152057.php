@@ -23,8 +23,9 @@ final class Version20240526152057 extends AbstractMigration
             `id` int NOT NULL AUTO_INCREMENT,
             `description` text,
             `progress` int DEFAULT NULL,
+            `user_id` int NOT NULL,
             PRIMARY KEY (`id`),
-            KEY `id` (`id`)
+            FOREIGN KEY (`user_id`) REFERENCES users (`id`)
           )");
 
     }

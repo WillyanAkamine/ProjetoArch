@@ -12,22 +12,31 @@ final class Version20240526005323 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'CLIENTES';
+        return 'Papeis e Usuarios';
     }
 
     public function up(Schema $schema): void
     {
         //TODO: CRIPTOGRAFAR SENHA
-        $this->addSql("CREATE TABLE IF NOT EXISTS `clients` (
+        $this->addSql("CREATE TABLE IF NOT EXISTS `roles` (
+            `id` int NOT NULL AUTO_INCREMENT,
+            `title` varchar(100) NOT NULL,
+            `description` varchar(100) NOT NULL,
+            `created_at` timestamp DEFAULT NOW(),
+            UNIQUE KEY `title` (`title`),
+            PRIMARY KEY (`id`)           
+        )");
+
+        $this->addSql("CREATE TABLE IF NOT EXISTS `users` (
             `id` int NOT NULL AUTO_INCREMENT,
             `name` varchar(100) NOT NULL,
             `email` varchar(100) NOT NULL,
             `password` varchar(255) NOT NULL,
-            `function` int DEFAULT NULL,
+            `role_id` int NOT NULL,
             PRIMARY KEY (`id`),
-            UNIQUE KEY `email` (`email`)
+            UNIQUE KEY `email` (`email`),
+            FOREIGN KEY (`role_id`) REFERENCES roles (`id`)
         )");
-
     }
 
     public function down(Schema $schema): void

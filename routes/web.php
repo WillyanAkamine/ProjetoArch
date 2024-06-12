@@ -40,22 +40,30 @@ $router->map('GET', '/pdf/{dir}/{filename}', function ($request, array $args) {
   throw new NotFoundException('File not found');
 });
 
-$router->group('/cliente', function ($router) {
-  $router->map('GET', '/obra', 'App\Controllers\ConstructionController');
-  $router->map('GET', '/orcamento', 'App\Controllers\BudgetController');
+$router->group('/', function ($router) {
+  $router->map('GET', '/obras', 'App\Controllers\ConstructionController');
+  $router->map('GET', '/obra/{client_id}', 'App\Controllers\ConstructionController::show');
+
+  $router->map('GET', '/orcamentos', 'App\Controllers\BudgetController');
+  
   $router->map('GET', '/notas', 'App\Controllers\NotesController');
-  $router->map('GET', '/custo', 'App\Controllers\CostController');
+  $router->map('GET', '/nota/{client_id}', 'App\Controllers\NotesController::show');
+
+  $router->map('GET', '/custos', 'App\Controllers\CostController');
 })->middleware(new AuthMiddleware);
 
-//ROTAS API
+
+//--------------//
+//  ROTAS API  //
+//------------//
 
 $responseFactory = new ResponseFactory;
 $strategyJSON = new League\Route\Strategy\JsonStrategy($responseFactory);
 
 $router->group('/api', function ($router) {
-  $router->map('POST', '/obra', 'App\Controllers\ConstructionController::store');
-  $router->map('POST', '/notas', 'App\Controllers\NotesController::store');
-  $router->map('POST', '/custo', 'App\Controllers\CostController::store');
+  $router->map('POST', '/obra/{client_id}', 'App\Controllers\ConstructionController::store');
+  $router->map('POST', '/notas/{client_id}', 'App\Controllers\NotesController::store');
+  $router->map('POST', '/custo/{client_id}', 'App\Controllers\CostController::store');
 })->setStrategy($strategyJSON);
 
 

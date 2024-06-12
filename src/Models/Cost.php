@@ -1,10 +1,10 @@
 <?php 
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Model;
 
-
 class Cost extends Model {
-    protected $fillable = ['labor', 'equip', 'third', 'adm', 'date'];
+    protected $fillable = ['labor', 'equip', 'third', 'adm', 'date', 'user_id'];
     protected $table = "costs";
 }

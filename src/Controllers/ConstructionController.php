@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\User;
 use App\Models\Construction;
 use App\Models\PDF;
 use App\Utils\File;
@@ -17,12 +18,22 @@ class ConstructionController {
     }
 
     public function __invoke() {
-        $documents = PDF::where('client_id', $_SESSION['user']['id'])->get();
-        return Render::render('Construction', ['documents' => $documents]);
+        $users = User::where('role_id', 2)->get();
+        return Render::render('Construction/Index', ["users" => $users]);
     }
 
-    public function store(ServerRequestInterface $request) {
-        File::upload($request->getUploadedFiles(), 'pdf', 'Construction');
+    public function show($request, array $args) {     
+        $client_id = $args['client_id'];   
+        $documents = PDF::where(['user_id' => $client_id, 'category' => 'Construction'])->get();
+
+        return Render::render('Construction/Show', [
+            "documents" => $documents, 
+            "client_id" => $client_id
+        ]);
+    }
+
+    public function store(ServerRequestInterface $request, array $args) {
+        File::upload($request->getUploadedFiles(), 'pdf', 'Construction', $args['client_id']);
 
         $form_data = $request->getParsedBody();
         
@@ -32,6 +43,6 @@ class ConstructionController {
             return ["message" => "Ocorreu um erro interno", "statusCode" => 400];
         }
 
-        return ["message" => "Construção criada com sucesso", "statusCode" => 201];
+        return ["message" => "Relatorio de obra criado com sucesso!", "statusCode" => 201];
     }
 }
