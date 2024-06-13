@@ -57,7 +57,6 @@
               <p>Equipamentos: <?= $last_cost['equip'] ?></p>
               <p>Terceiros: R$ <?= $last_cost['third'] ?></p>
               <p>Taxa ADM: R$ <?= $last_cost['adm'] ?></p>
-              <!-- <a href="caminho/do/arquivo1.pdf" target="_blank">Ver Relatório</a> -->
           </div>
 
           <div>
