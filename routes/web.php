@@ -23,11 +23,12 @@ $router->map('GET', '/login', 'App\Controllers\AuthController');
 $router->map('POST', '/login', 'App\Controllers\AuthController::login');
 $router->map('GET', '/logout', 'App\Controllers\AuthController::logout');
 
-$router->map('GET', '/pdf/{dir}/{filename}', function ($request, array $args) {
+$router->map('GET', '/pdf/{dir}/{client_id}/{filename}', function ($request, array $args) {
   $filename = $args['filename'];
   $dir = $args['dir'];
-  $user_id = $_SESSION["user"]['id'];
-  $path = __DIR__ . "/../storage/{$dir}/{$user_id}/{$filename}";
+  $client_id = $args['client_id'];
+  $path = __DIR__ . "/../storage/{$dir}/{$client_id}/{$filename}";
+
 
   if (file_exists($path)) {
       $response = new Response();

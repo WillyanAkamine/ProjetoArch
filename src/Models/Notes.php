@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Notes extends Model {
     protected $fillable = ['description', 'user_id'];
     protected $table = "notes";
+    public $timestamps = false;
 }

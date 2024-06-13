@@ -24,7 +24,9 @@ final class Version20240526152349 extends AbstractMigration
             `title` varchar(100) NOT NULL,
             `description` text,
             `user_id` int NOT NULL,
+            `pdf_id` int NOT NULL,
             PRIMARY KEY (`id`),
+            FOREIGN KEY (`pdf_id`) REFERENCES pdf(`id`),
             FOREIGN KEY (`user_id`) REFERENCES users(`id`)
           )");
 

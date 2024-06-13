@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Cost extends Model {
     protected $fillable = ['labor', 'equip', 'third', 'adm', 'date', 'user_id'];
     protected $table = "costs";
+    public $timestamps = false;
 }

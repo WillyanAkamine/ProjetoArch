@@ -26,7 +26,7 @@
             <?php foreach($documents as $document): ?>
                 <div class="mb-3">
                 <li>
-                    <a class="btn btn-outline-dark mb-[5px]" target="_blank" href="/pdf/Notes/<?=$document->name?>" target="_blank"> <?=$document->name?> </a>
+                    <a class="btn btn-outline-dark mb-[5px]" target="_blank" href="/pdf/Notes/<?=$client_id?>/<?=$document->name?>" target="_blank"> <?=$document->name?> </a>
                 </li>
                 </div>
             <?php endforeach?>

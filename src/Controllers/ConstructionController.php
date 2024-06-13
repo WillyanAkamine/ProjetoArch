@@ -11,20 +11,30 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class ConstructionController {
     private Construction $construction_model;
+    public AuthController $auth;
 
     public function __construct() 
     {
         $this->construction_model = new Construction();
+        $this->auth = new AuthController();
     }
 
     public function __invoke() {
-        $users = User::where('role_id', 2)->get();
+
+        if($this->auth->getUser()['id'] == 1) {
+            $users = User::where('role_id', 2)->get();
+        }else{
+            $users = User::where('id', $this->auth->getUser()['id'])->get();
+        }
+
         return Render::render('Construction/Index', ["users" => $users]);
     }
 
     public function show($request, array $args) {     
         $client_id = $args['client_id'];   
-        $documents = PDF::where(['user_id' => $client_id, 'category' => 'Construction'])->get();
+        $documents = PDF::where(['user_id' => $client_id, 'category' => 'Construction'])
+                    ->with('construction')
+                    ->get();
 
         return Render::render('Construction/Show', [
             "documents" => $documents, 
@@ -33,10 +43,16 @@ class ConstructionController {
     }
 
     public function store(ServerRequestInterface $request, array $args) {
-        File::upload($request->getUploadedFiles(), 'pdf', 'Construction', $args['client_id']);
-        $inserted = $this->construction_model->insert($request->getParsedBody());
+        $pdf = File::upload($request->getUploadedFiles(), 'pdf', 'Construction', $args['client_id']);
         
-        if(!$inserted) {
+        $construct = $this->construction_model->create([
+            ...$request->getParsedBody(),
+            'pdf_id' => $pdf->id
+        ]);
+
+        
+        
+        if(!$construct) {
             return ["message" => "Ocorreu um erro interno", "statusCode" => 400];
         }
 

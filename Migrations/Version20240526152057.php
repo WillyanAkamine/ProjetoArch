@@ -22,10 +22,23 @@ final class Version20240526152057 extends AbstractMigration
         $this->addSql("CREATE TABLE IF NOT EXISTS `constructions` (
             `id` int NOT NULL AUTO_INCREMENT,
             `description` text,
+            `title` varchar(100) NOT NULL,
             `progress` int DEFAULT NULL,
+            `created_at` timestamp DEFAULT NOW(),
             `user_id` int NOT NULL,
+            `pdf_id` int NOT NULL,
             PRIMARY KEY (`id`),
+            FOREIGN KEY (`pdf_id`) REFERENCES pdf(`id`),
             FOREIGN KEY (`user_id`) REFERENCES users (`id`)
+          )");
+
+        $this->addSql("CREATE TABLE IF NOT EXISTS `constructions_has_pdf` (
+            `id`                int NOT NULL AUTO_INCREMENT,
+            `construction_id`   int NOT NULL,
+            `pdf_id`            int NOT NULL,
+            PRIMARY KEY (`id`),
+            FOREIGN KEY (`construction_id`) REFERENCES constructions (`id`),
+            FOREIGN KEY (`pdf_id`) REFERENCES pdf (`id`)
           )");
 
     }

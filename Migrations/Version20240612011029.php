@@ -14,20 +14,24 @@ final class Version20240612011029 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'PDF';
+        return 'CUSTO DE OBRA';
     }
 
     public function up(Schema $schema): void
     {
-        $this->addSql("CREATE TABLE pdf (
-            `id` INT AUTO_INCREMENT NOT NULL, 
-            `name` VARCHAR(255) NOT NULL,
-            `user_id` INT NOT NULL,
-            `category` ENUM('Construction', 'Notes', 'Cost') NOT NULL,
-            PRIMARY KEY(`id`),
-            FOREIGN KEY (`user_id`) REFERENCES users (`id`)
+        $this->addSql("CREATE TABLE IF NOT EXISTS `costs` (
+            `id` int NOT NULL AUTO_INCREMENT,
+            `labor` decimal(10,2) NOT NULL,  /* mao de obra */
+            `equip` decimal(10,2) NOT NULL, /*Equipamentos*/
+            `third` decimal(10,2) NOT NULL, /*Teceiros*/
+            `adm` decimal(10,2) NOT NULL, /*Taxa ADM*/
+            `date` timestamp DEFAULT NOW(),
+            `user_id` int NOT NULL,
+            `pdf_id` int NOT NULL,
+            PRIMARY KEY (`id`),
+            FOREIGN KEY (`pdf_id`) REFERENCES pdf(`id`),
+            FOREIGN KEY (`user_id`) REFERENCES users(`id`)
         )");
-        
     }
 
     public function down(Schema $schema): void

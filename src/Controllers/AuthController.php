@@ -8,9 +8,13 @@ use Psr\Http\Message\ServerRequestInterface;
 use Laminas\Diactoros\Response\RedirectResponse;
 
 class AuthController {
-  
+
   public function __invoke() {  
-      return Render::render('Login');
+    return Render::render('Login');
+  }
+
+  public function getUser(){
+    return $_SESSION['user'];
   }
 
   public function login(ServerRequestInterface $request) {
