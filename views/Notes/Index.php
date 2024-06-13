@@ -1,8 +1,9 @@
 <?php $this->layout('templates/main', ['title' => 'Clientes', 'user' => $user]) ?>
 
 <section>
-    <table class="table w-50">
-        <thead>
+<div class="flex w-50 table-container bg-white shadow-lg rounded-lg overflow-hidden mx-auto">
+    <table class="table m-2">
+        <thead class="bg-blue-600 text-white">
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Nome</th>
@@ -15,12 +16,13 @@
                     <th scope="row"><?= $user['id']?></th>
                     <td><?= $user['name']?></td>
                     <td>
-                        <a href="/nota/<?=$user['id']?>">Ver</a>
+                        <a class="btn btn-primary" href="/nota/<?=$user['id']?>">Ver</a>
                     </td>
                 </tr>
             <?php endforeach ?>
         </tbody>
     </table>
+</div>
 </section>
 
 <?php $this->push('scripts') ?>

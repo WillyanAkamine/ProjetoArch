@@ -1,6 +1,7 @@
 <?php $this->layout('templates/main', ['title' => 'Página Inicial', 'user' => $user]) ?>
 
-<section class="container my-5">
+<section>
+<div class="flex row w-50 table-container bg-white shadow-lg rounded-lg overflow-hidden mx-auto">
     <h2 class="py-4 font-bold">Solicitar Orçamento</h2>
 
     <form id="budget-form" action="" method="POST" class="needs-validation" novalidate>
@@ -33,4 +34,5 @@
             <button type="submit" class="btn btn-primary">Enviar</button>
         </div>
     </form>
+</div>
 </section>
