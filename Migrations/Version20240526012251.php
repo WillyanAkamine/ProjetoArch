@@ -24,8 +24,8 @@ final class Version20240526012251 extends AbstractMigration
             `name` VARCHAR(255) NOT NULL,
             `user_id` INT NOT NULL,
             `category` ENUM('Construction', 'Notes', 'Cost') NOT NULL,
-            `construction_id`
-            `notes_id`
+            `construction_id` INT,
+            `notes_id` INT,
             PRIMARY KEY(`id`),
             FOREIGN KEY (`user_id`) REFERENCES users (`id`)
         )");
