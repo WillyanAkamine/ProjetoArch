@@ -9,10 +9,8 @@ abstract class File
 
     private static function createDir($directoryPath){
         if(!is_dir($directoryPath)){
-            mkdir($directoryPath, 0755, true);
+            mkdir($directoryPath, 0777, true);
         }
-
-        return;
     }
 
     static function upload($uploadedFiles, string $form_field, string $path_name, int $client_id)
@@ -25,28 +23,28 @@ abstract class File
         self::createDir(__DIR__ . "/../../storage/{$path_name}");
         self::createDir($uploadDir);        
 
-        if (is_array($pdfFile)) {
-            foreach ($pdfFile as $pdf) {
-                if ($pdf && $pdf->getError() === UPLOAD_ERR_OK) {
-                    $filename = Formater::kebab($time_now . $pdf->getClientFilename());
-                    $pdf->moveTo("{$uploadDir}/{$filename}");
+        // if (is_array($pdfFile)) {
+        //     foreach ($pdfFile as $pdf) {
+        //         if ($pdf && $pdf->getError() === UPLOAD_ERR_OK) {
+        //             $filename = Formater::kebab($time_now . $pdf->getClientFilename());
+        //             $pdf->moveTo("{$uploadDir}/{$filename}");
 
-                    $pdf_model->insert([
-                        "name" => $filename,
-                        "user_id" => $client_id,
-                        "category" => $path_name
-                    ]);
-                }
-            }
+        //             $pdf_model->insert([
+        //                 "name" => $filename,
+        //                 "user_id" => $client_id,
+        //                 "category" => $path_name
+        //             ]);
+        //         }
+        //     }
 
-            return;
-        }
+        //     return;
+        // }
 
         if ($pdfFile && $pdfFile->getError() === UPLOAD_ERR_OK) {
             $filename = Formater::kebab($time_now . $pdfFile->getClientFilename());
             $pdfFile->moveTo("{$uploadDir}/{$filename}");
 
-            $pdf_model->insert([
+            return $pdf_model->create([
                 "name" => $filename,
                 "user_id" => $client_id,
                 "category" => $path_name

@@ -26,6 +26,7 @@ $router->map('GET', '/logout', 'App\Controllers\AuthController::logout');
 $router->map('GET', '/pdf/{dir}/{filename}', function ($request, array $args) {
   $filename = $args['filename'];
   $dir = $args['dir'];
+  //FIXME: Get params user id 
   $user_id = $_SESSION["user"]['id'];
   $path = __DIR__ . "/../storage/{$dir}/{$user_id}/{$filename}";
 
@@ -45,12 +46,15 @@ $router->group('/', function ($router) {
   $router->map('GET', '/obra/{client_id}', 'App\Controllers\ConstructionController::show');
 
   $router->map('GET', '/orcamentos', 'App\Controllers\BudgetController');
+  $router->map('GET', '/orcamentos/solicitar', 'App\Controllers\BudgetController::request');
+  $router->map('GET', '/orcamentos/ver/{id}', 'App\Controllers\BudgetController::show');
   
   $router->map('GET', '/notas', 'App\Controllers\NotesController');
   $router->map('GET', '/nota/{client_id}', 'App\Controllers\NotesController::show');
 
   $router->map('GET', '/custos', 'App\Controllers\CostController');
   $router->map('GET', '/custo/{client_id}', 'App\Controllers\CostController::show');
+
 })->middleware(new AuthMiddleware);
 
 
@@ -65,6 +69,9 @@ $router->group('/api', function ($router) {
   $router->map('POST', '/obra/{client_id}', 'App\Controllers\ConstructionController::store');
   $router->map('POST', '/notas/{client_id}', 'App\Controllers\NotesController::store');
   $router->map('POST', '/custo/{client_id}', 'App\Controllers\CostController::store');
+  $router->map('POST', '/orcamento/solicitar/{user_id}', 'App\Controllers\BudgetController::store');
+  $router->map('POST', '/orcamento/enviar/{id}', 'App\Controllers\BudgetController::sendBudget');
+  $router->map('POST', '/orcamento/aceitar/{id}', 'App\Controllers\BudgetController::accepted');
 })->setStrategy($strategyJSON);
 
 
