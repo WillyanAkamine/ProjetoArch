@@ -70,11 +70,11 @@ class CostController
       $total['total'] += $cost->labor + $cost->equip + $cost->third + $cost->adm;
     }
 
-      $total['labor'] = number_format($cost->labor, 2, ',', '.');
-      $total['equip'] = number_format($cost->equip, 2, ',', '.');
-      $total['third'] = number_format($cost->third, 2, ',', '.');
-      $total['adm'] = number_format($cost->adm, 2, ',', '.');
-      $total['total'] = number_format($cost->labor + $cost->equip + $cost->third + $cost->adm, 2, ',', '.');
+      $total['labor'] = $cost->labor ? number_format($cost->labor, 2, ',', '.') : 0 ;
+      $total['equip'] = $cost->equip ? number_format($cost->equip, 2, ',', '.'): 0 ;
+      $total['third'] = $cost->third ? number_format($cost->third, 2, ',', '.'): 0 ;
+      $total['adm'] = $cost->adm ? number_format($cost->adm, 2, ',', '.'): 0;
+      $total['total'] = $cost->labor + $cost->equip + $cost->third + $cost->adm ? number_format($cost->labor + $cost->equip + $cost->third + $cost->adm, 2, ',', '.'): 0;
 
     return $total;
   }
