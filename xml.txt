@@ -1,0 +1,91 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="DER">
+    <mxGraphModel dx="1440" dy="849" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="User" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="30" width="120" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="3" value="id : INT (PK)&#xa;name : VARCHAR(255)&#xa;email : VARCHAR(255)&#xa;role : ENUM('cliente', 'administrador')" style="whiteSpace=wrap;html=1;" vertex="1" parent="2">
+          <mxGeometry width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="2" target="6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5" value="Construction" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="30" width="120" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="6" value="id : INT (PK)&#xa;name : VARCHAR(255)&#xa;description : TEXT" style="whiteSpace=wrap;html=1;" vertex="1" parent="5">
+          <mxGeometry width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="7" value="Cost" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="30" width="120" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="8" value="id : INT (PK)&#xa;amount : DECIMAL(10, 2)&#xa;description : TEXT&#xa;construction_id : INT (FK)" style="whiteSpace=wrap;html=1;" vertex="1" parent="7">
+          <mxGeometry width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="7" target="5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="10" value="Material" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="210" width="120" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="11" value="id : INT (PK)&#xa;name : VARCHAR(255)&#xa;quantity : INT&#xa;cost : DECIMAL(10, 2)&#xa;construction_id : INT (FK)" style="whiteSpace=wrap;html=1;" vertex="1" parent="10">
+          <mxGeometry width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="10" target="5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="13" value="Budget" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="210" width="120" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="14" value="id : INT (PK)&#xa;amount : DECIMAL(10, 2)&#xa;description : TEXT&#xa;construction_id : INT (FK)" style="whiteSpace=wrap;html=1;" vertex="1" parent="13">
+          <mxGeometry width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="13" target="5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="16" value="Note" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="30" width="120" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="17" value="id : INT (PK)&#xa;content : TEXT&#xa;date : DATE&#xa;construction_id : INT (FK)" style="whiteSpace=wrap;html=1;" vertex="1" parent="16">
+          <mxGeometry width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="16" target="5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="19" value="Payment" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="210" width="120" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="20" value="id : INT (PK)&#xa;amount : DECIMAL(10, 2)&#xa;date : DATE&#xa;user_id : INT (FK)&#xa;construction_id : INT (FK)" style="whiteSpace=wrap;html=1;" vertex="1" parent="19">
+          <mxGeometry width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="21" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="19" target="2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="22" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="19" target="5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="23" value="Report" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="710" y="30" width="120" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="24" value="id : INT (PK)&#xa;month : DATE&#xa;content : TEXT&#xa;construction_id : INT (FK)" style="whiteSpace=wrap;html=1;" vertex="1" parent="23">
+          <mxGeometry width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="25" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="23" target="5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="26" value="Schedule" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="390" width="120" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="27" value="id : INT (PK)&#xa;activity : VARCHAR(255)&#xa;start_date : DATE&#xa;end_date : DATE&#xa;status : ENUM('pendente', 'em progresso', 'concluído')&#xa;notes : TEXT&#xa;construction_id : INT (FK)" style="whiteSpace=wrap;html=1;" vertex="1" parent="26">
+          <mxGeometry width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="28" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="26" target="5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
