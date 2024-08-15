@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Budget extends Model {
-    protected $fillable = ['title', 'description', 'pdf_id', 'user_id'];
+    protected $fillable = ['title', 'description','value', 'status', 'pdf_id', 'construction_id'];
     protected $table = "budget";
     public $timestamps = false;
 

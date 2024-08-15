@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class PDF extends Model {
-    protected $fillable = ['name', 'user_id', 'category'];
+    protected $fillable = ['name', 'url'];
     protected $table = 'pdf';
     public $timestamps = false;
 }

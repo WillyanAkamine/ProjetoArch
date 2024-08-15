@@ -23,7 +23,6 @@ final class Version20240810213420 extends AbstractMigration
             `id` INT AUTO_INCREMENT NOT NULL,
             `description` varchar(100) NOT NULL,
             `value` varchar(100) NOT NULL,
-            `status` varchar(100) NOT NULL,
             `created_at` datetime NOT NULL,
             `updated_at` datetime,
             `construction_id`INT NOT NULL,

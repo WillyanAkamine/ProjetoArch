@@ -25,7 +25,7 @@ final class Version20240810213112 extends AbstractMigration
             `progress` varchar(100) NOT NULL,
             `start_date` datetime NOT NULL,
             `end_date` datetime,
-            `status` varchar(100) NOT NULL,
+            `status` ENUM('Inicio', 'Andamento', 'Finalizado') NOT NULL,
             `created_at` datetime NOT NULL,
             `updated_at` datetime,
             `construction_id` INT NOT NULL,

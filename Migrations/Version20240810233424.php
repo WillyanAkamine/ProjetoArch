@@ -21,7 +21,7 @@ final class Version20240810233424 extends AbstractMigration
     {
         $this->addSql("ALTER TABLE costs
         ADD CONSTRAINT fk_constructions_costs
-        FOREIGN KEY (construction_id) REFERENCES constructions(id)
+        FOREIGN KEY (construction_id) REFERENCES constructions(id) ON DELETE CASCADE
         ");
 
     }

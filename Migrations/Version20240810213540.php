@@ -23,7 +23,7 @@ final class Version20240810213540 extends AbstractMigration
             `id` INT AUTO_INCREMENT NOT NULL,
             `description` varchar(100) NOT NULL,
             `progress` varchar(100) NOT NULL,
-            `status` varchar(100) NOT NULL,
+            `status` ENUM('Pago', 'Aberto', 'Vencido') NOT NULL,
             `created_at` datetime NOT NULL,
             `updated_at` datetime,
             `note_id` INT NOT NULL,

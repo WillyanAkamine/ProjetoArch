@@ -22,6 +22,7 @@ final class Version20240810213759 extends AbstractMigration
         $this->addSql("CREATE TABLE pdfs (
             `id` INT AUTO_INCREMENT NOT NULL, 
             `name` VARCHAR(255) NOT NULL,
+            `url` VARCHAR(255) NOT NULL,
             `created_at` datetime NOT NULL,
             `updated_at` datetime,
             PRIMARY KEY(`id`)
