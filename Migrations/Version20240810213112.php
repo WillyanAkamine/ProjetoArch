@@ -26,7 +26,7 @@ final class Version20240810213112 extends AbstractMigration
             `start_date` datetime NOT NULL,
             `end_date` datetime,
             `status` ENUM('Inicio', 'Andamento', 'Finalizado') NOT NULL,
-            `created_at` datetime NOT NULL,
+            `created_at` datetime DEFAULT now() NOT NULL,
             `updated_at` datetime,
             `construction_id` INT NOT NULL,
             PRIMARY KEY(`id`)

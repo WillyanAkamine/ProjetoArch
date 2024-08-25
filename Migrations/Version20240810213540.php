@@ -24,7 +24,7 @@ final class Version20240810213540 extends AbstractMigration
             `description` varchar(100) NOT NULL,
             `progress` varchar(100) NOT NULL,
             `status` ENUM('Pago', 'Aberto', 'Vencido') NOT NULL,
-            `created_at` datetime NOT NULL,
+            `created_at` datetime DEFAULT now() NOT NULL,
             `updated_at` datetime,
             `note_id` INT NOT NULL,
             PRIMARY KEY(`id`)

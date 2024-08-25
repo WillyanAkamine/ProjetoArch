@@ -23,7 +23,7 @@ final class Version20240810213759 extends AbstractMigration
             `id` INT AUTO_INCREMENT NOT NULL, 
             `name` VARCHAR(255) NOT NULL,
             `url` VARCHAR(255) NOT NULL,
-            `created_at` datetime NOT NULL,
+            `created_at` datetime DEFAULT now() NOT NULL,
             `updated_at` datetime,
             PRIMARY KEY(`id`)
         )");

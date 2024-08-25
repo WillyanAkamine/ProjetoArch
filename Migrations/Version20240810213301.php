@@ -24,7 +24,7 @@ final class Version20240810213301 extends AbstractMigration
             `name` varchar(100) NOT NULL,
             `description` varchar(100) NOT NULL,
             `price` varchar(100) NOT NULL,
-            `created_at` datetime NOT NULL,
+            `created_at` datetime DEFAULT now() NOT NULL,
             `updated_at` datetime,
             PRIMARY KEY(`id`)
         )");

@@ -23,6 +23,7 @@
         "vlucas/phpdotenv": "^5.6",
         "doctrine/migrations": "^3.7",
         "nesbot/carbon": "^2.72",
-        "phpmailer/phpmailer": "^6.9"
+        "phpmailer/phpmailer": "^6.9",
+        "rakit/validation": "^1.4"
     }
 }

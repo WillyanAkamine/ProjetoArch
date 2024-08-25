@@ -24,7 +24,7 @@ final class Version20240810212845 extends AbstractMigration
             `email` varchar(100) NOT NULL,
             `password` varchar(100) NOT NULL,
             `name` varchar(100) NOT NULL,
-            `created_at` datetime NOT NULL,
+            `created_at` datetime DEFAULT now() NOT NULL,
             `updated_at` datetime,
             `role_id` INT,
             PRIMARY KEY(`id`)

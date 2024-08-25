@@ -82,12 +82,14 @@ class BudgetController
         return ["message" => "Pedido de Orçamento enviado com sucesso!", "statusCode" => 200];        
     }
 
-    public function store(ServerRequestInterface $request, $args)
+    public function store(ServerRequestInterface $request)
     {
 
-        $inserted = $this->budget->insert([...$request->getParsedBody(), "user_id" => $args['user_id']]);
+        $data = $request->getParsedBody();
 
-        if (!$inserted) {
+        $budget = $this->budget->create($data);
+
+        if (!$budget) {
             return ["message" => "Ocorreu um erro interno", "statusCode" => 400];
         }
 

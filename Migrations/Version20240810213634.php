@@ -25,7 +25,7 @@ final class Version20240810213634 extends AbstractMigration
             `description` varchar(100) NOT NULL,
             `value` varchar(100) NOT NULL,
             `status` ENUM('Pendente', 'Aceito', 'Nao_aceito') NOT NULL,
-            `created_at` datetime NOT NULL,
+            `created_at` datetime DEFAULT now() NOT NULL,
             `updated_at` datetime,
             `construction_id` INT NOT NULL,
             `pdf_id` INT NOT NULL,

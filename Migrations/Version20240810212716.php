@@ -21,8 +21,8 @@ final class Version20240810212716 extends AbstractMigration
     {
         $this->addSql("CREATE TABLE roles (
             `id` INT AUTO_INCREMENT NOT NULL, 
-            `label` decimal(10,2) NOT NULL,
-            `created_at` datetime NOT NULL,
+            `label` VARCHAR(15) NOT NULL,
+            `created_at` datetime DEFAULT now() NOT NULL,
             `updated_at` datetime,
             PRIMARY KEY(`id`)
         )");

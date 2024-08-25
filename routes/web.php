@@ -66,7 +66,11 @@ $responseFactory = new ResponseFactory;
 $strategyJSON = new League\Route\Strategy\JsonStrategy($responseFactory);
 
 $router->group('/api', function ($router) {
-  $router->map('POST', '/obra/{client_id}', 'App\Controllers\ConstructionController::store');
+  $router->map('GET', '/obra/{id}', 'App\Controllers\ConstructionController::show');
+  $router->map('POST', '/obra', 'App\Controllers\ConstructionController::store');
+  $router->map('POST', '/obra/{id}', 'App\Controllers\ConstructionController::update');
+  $router->map('DELETE', '/obra/{id}', 'App\Controllers\ConstructionController::delete');
+
   $router->map('POST', '/notas/{client_id}', 'App\Controllers\NotesController::store');
   $router->map('POST', '/custo/{client_id}', 'App\Controllers\CostController::store');
   $router->map('POST', '/orcamento/solicitar/{user_id}', 'App\Controllers\BudgetController::store');
