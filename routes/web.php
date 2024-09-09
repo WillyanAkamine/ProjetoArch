@@ -73,9 +73,14 @@ $router->group('/api', function ($router) {
 
   $router->map('POST', '/notas/{client_id}', 'App\Controllers\NotesController::store');
   $router->map('POST', '/custo/{client_id}', 'App\Controllers\CostController::store');
-  $router->map('POST', '/orcamento/solicitar/{user_id}', 'App\Controllers\BudgetController::store');
-  $router->map('POST', '/orcamento/enviar/{id}', 'App\Controllers\BudgetController::sendBudget');
-  $router->map('POST', '/orcamento/aceitar/{id}', 'App\Controllers\BudgetController::accepted');
+  
+  $router->map('GET', '/orcamentos', 'App\Controllers\BudgetController');
+  $router->map('GET', '/orcamentos/solicitar', 'App\Controllers\BudgetController::request');
+  $router->map('POST', '/orcamentos/criar', 'App\Controllers\BudgetController::store');
+  $router->map('GET', '/orcamentos/ver/{id}', 'App\Controllers\BudgetController::show');
+  $router->map('GET', '/orcamentos/editar/{id}', 'App\Controllers\BudgetController::edit');
+  $router->map('PUT', '/orcamentos/atualizar/{id}', 'App\Controllers\BudgetController::update');
+  $router->map('DELETE', '/orcamentos/deletar/{id}', 'App\Controllers\BudgetController::delete');
 })->setStrategy($strategyJSON);
 
 
