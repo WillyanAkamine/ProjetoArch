@@ -22,8 +22,9 @@ class ConstructionController {
     }
 
     public function __invoke() {
-        $users = User::where('role_id', 2)->get();
-        return Render::render('Construction/Index', ["users" => $users]);
+        $constructions = Construction::with('user')->get();
+
+        return Render::render('Construction/Index', ["constructions" => $constructions]);
     }
 
     public function show(ServerRequestInterface $request, array $args) {     

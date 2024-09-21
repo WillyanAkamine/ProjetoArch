@@ -1,22 +1,30 @@
 <?php $this->layout('templates/main', ['title' => 'Clientes', 'user' => $user]) ?>
 
 <section>
-    <div class="flex w-50 table-container bg-white shadow-lg rounded-lg overflow-hidden mx-auto">
-        <table class="table m-2">
+    <div class="flex w-50 table-container shadow-lg rounded-lg overflow-hidden mx-auto bg-[#212529] mt-[25px]">
+        <table class="table table-dark">
             <thead class="bg-blue-600 text-white">
                 <tr>
                     <th scope="col" class="px-4 py-2">#</th>
                     <th scope="col" class="px-4 py-2">Nome</th>
+                    <th scope="col" class="px-4 py-2">Obra</th>
+                    <th scope="col" class="px-4 py-2">Descrição</th>
                     <th scope="col" class="px-4 py-2">Ações</th>
                 </tr>
             </thead>
+            
             <tbody class="bg-white divide-y divide-gray-200">
-                <?php foreach ($users as $user) : ?>
+                <?php foreach ($constructions as $construction) : ?>
                     <tr class="hover:bg-gray-100">
-                        <th scope="row" class="px-4 py-2"><?= $user['id'] ?></th>
-                        <td class="px-4 py-2"><?= $user['name'] ?></td>
+                        <td scope="row" class="px-4 py-2"><?= $user['id'] ?></td>
+                        <td class="px-4 py-2"><?= $construction['user']['name'] ?></td>
+                        <td class="px-4 py-2"><?= $construction['title'] ?></td>
+                        <td class="px-4 py-2"><?= $construction['description'] ?></td>
                         <td class="px-4 py-2">
-                            <a class="btn btn-primary" href="/obra/<?= $user['id'] ?>">Ver</a>
+                        <div class="flex gap-2">
+                        <a href="/obra/<?= $construction['user']['id'] ?>"><img src="/public/icons/eye.svg" class="w-[35px]" alt="Vizualizar"></a>
+                        <a href="/obra/<?= $construction['user']['id'] ?>"><img src="/public/icons/edit.svg" class="w-[35px]" alt="Editar"></a>
+                        </div>
                         </td>
                     </tr>
                 <?php endforeach ?>
