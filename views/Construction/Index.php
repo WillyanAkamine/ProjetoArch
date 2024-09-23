@@ -1,6 +1,18 @@
 <?php $this->layout('templates/main', ['title' => 'Clientes', 'user' => $user]) ?>
 
 <section>
+    <div class="flex row gap-3 w-50 bg-white shadow-lg rounded-lg overflow-hidden mx-auto">
+    <h2 class="py-4 font-bold">Lista de Obras</h2>
+
+
+    <div class="flex justify-end mt-40px">
+    <a href="/obra/create">
+    <img src="/public/icons/create.svg" class="w-[50px]" alt="Criar">
+</a>
+    </div>
+
+
+    </div>
     <div class="flex w-50 table-container shadow-lg rounded-lg overflow-hidden mx-auto bg-[#212529] mt-[25px]">
         <table class="table table-dark">
             <thead class="bg-blue-600 text-white">

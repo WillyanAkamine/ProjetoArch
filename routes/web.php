@@ -43,6 +43,7 @@ $router->map('GET', '/pdf/{dir}/{filename}', function ($request, array $args) {
 
 $router->group('/', function ($router) {
   $router->map('GET', '/obras', 'App\Controllers\ConstructionController');
+  $router->map('GET', '/obra/create', 'App\Controllers\ConstructionController::create');
   $router->map('GET', '/obra/{client_id}', 'App\Controllers\ConstructionController::show');
 
   $router->map('GET', '/orcamentos', 'App\Controllers\BudgetController');

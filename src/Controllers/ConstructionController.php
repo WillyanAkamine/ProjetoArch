@@ -25,6 +25,8 @@ class ConstructionController {
         $constructions = Construction::with('user')->get();
 
         return Render::render('Construction/Index', ["constructions" => $constructions]);
+
+        return Render::render('Construction/Create', ["constructions" => $constructions]);
     }
 
     public function show(ServerRequestInterface $request, array $args) {     
@@ -98,4 +100,11 @@ class ConstructionController {
 
         return new JsonResponse(["message" => "Construção deletada com sucesso", "status" => 200]);
     }
+
+    public function create() {
+        $constructions = Construction::with('user')->get();
+
+        return Render::render('Construction/Create', ["constructions" => $constructions]);
+    }
+    
 }
