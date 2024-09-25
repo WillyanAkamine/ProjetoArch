@@ -46,6 +46,7 @@ $router->group('/', function ($router) {
   $router->map('GET', '/obra/create', 'App\Controllers\ConstructionController::create');
   $router->map('GET', '/obra/{client_id}', 'App\Controllers\ConstructionController::show');
 
+
   $router->map('GET', '/orcamentos', 'App\Controllers\BudgetController');
   $router->map('GET', '/orcamentos/solicitar', 'App\Controllers\BudgetController::request');
   $router->map('GET', '/orcamentos/ver/{id}', 'App\Controllers\BudgetController::show');
@@ -71,6 +72,7 @@ $router->group('/api', function ($router) {
   $router->map('POST', '/obra', 'App\Controllers\ConstructionController::store');
   $router->map('POST', '/obra/{id}', 'App\Controllers\ConstructionController::update');
   $router->map('DELETE', '/obra/{id}', 'App\Controllers\ConstructionController::delete');
+  
 
   $router->map('POST', '/notas/{client_id}', 'App\Controllers\NotesController::store');
   $router->map('POST', '/custo/{client_id}', 'App\Controllers\CostController::store');

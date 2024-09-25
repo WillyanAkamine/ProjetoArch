@@ -55,8 +55,8 @@
                 <select id="client" name="client" required
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                     <option value="">Selecione um cliente</option>
-                    <?php foreach ($clients as $client): ?>
-                        <option value="<?= $client['id'] ?>"><?= $client['name'] ?></option>
+                    <?php foreach ($users as $user): ?>
+                        <option value="<?= $user['id'] ?>"><?= $user['name'] ?></option>
                     <?php endforeach ?>
                 </select>
             </div>
@@ -71,6 +71,7 @@
             <!-- Botões -->
             <div class="flex space-x-4">
                 <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">
+                <a href="/obra/view">
                     Criar
                 </button>
                 <button type="reset" class="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700">

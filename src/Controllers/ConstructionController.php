@@ -29,16 +29,33 @@ class ConstructionController {
         return Render::render('Construction/Create', ["constructions" => $constructions]);
     }
 
-    public function show(ServerRequestInterface $request, array $args) {     
-        $id = $args['id'];
+    // public function show(ServerRequestInterface $request, array $args) {     
+    //     $id = $args['id'];
         
-        $construction = $this->construction_model->where('id', $id)->first();
+    //     $construction = $this->construction_model->where('id', $id)->first();
 
-        if(!$construction)
-            return new JsonResponse(['message' => "Erro, construção não encontrada", "status" => 404]);
+    //     if(!$construction)
+    //         return new JsonResponse(['message' => "Erro, construção não encontrada", "status" => 404]);
 
-        return new JsonResponse(['construction' => $construction->getAttributes(), "status" => 200]);
+    //     return new JsonResponse(['construction' => $construction->getAttributes(), "status" => 200]);
+        
+    // }
+
+
+    public function show(ServerRequestInterface $request, array $args)
+{
+    $id = $args['id'];
+    
+    // Obtém a construção pelo ID
+    $construction = $this->construction_model->where('id', $id)->first();
+
+    if (!$construction) {
+        return Render::render('errors/404', ["message" => "Construção não encontrada"]);
     }
+
+    // Renderiza a página de visualização (View)
+    return Render::render('Construction/View', ["construction" => $construction]);
+}
 
     public function store(ServerRequestInterface $request) {
         $data = $request->getParsedBody();
@@ -105,6 +122,24 @@ class ConstructionController {
         $constructions = Construction::with('user')->get();
 
         return Render::render('Construction/Create', ["constructions" => $constructions]);
+
+    }
+
+    public function showClient(ServerRequestInterface $request, array $args) {
+        $clientId = $args['client_id'];
+        
+        // Obtém as construções do cliente específico
+        $constructions = $this->construction_model->where('client_id', $clientId)->get();
+    
+        if ($constructions->isEmpty()) {
+            return Render::render('errors/404', ["message" => "Nenhuma construção encontrada para este cliente."]);
+        }
+    
+        // Renderiza a view com as construções do cliente
+        return Render::render('Construction/View', ["constructions" => $constructions]);
     }
     
+
+    
+
 }
