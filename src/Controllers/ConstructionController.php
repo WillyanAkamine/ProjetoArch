@@ -13,69 +13,71 @@ use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 
-class ConstructionController {
+class ConstructionController
+{
     private Construction $construction_model;
 
-    public function __construct() 
+    public function __construct()
     {
         $this->construction_model = new Construction();
     }
 
-    public function __invoke() {
+    public function __invoke()
+    {
         $constructions = Construction::with('user')->get();
 
         return Render::render('Construction/Index', ["constructions" => $constructions]);
-
     }
 
     // public function show(ServerRequestInterface $request, array $args) {     
     //     $id = $args['id'];
-        
+
     //     $construction = $this->construction_model->where('id', $id)->first();
 
     //     if(!$construction)
     //         return new JsonResponse(['message' => "Erro, construção não encontrada", "status" => 404]);
 
     //     return new JsonResponse(['construction' => $construction->getAttributes(), "status" => 200]);
-        
+
     // }
 
 
     public function show(ServerRequestInterface $request, array $args)
-{
-    $id = $args['id'];
-    
-    // Obtém a construção pelo ID
-    $construction = $this->construction_model->where('id', $id)->first();
+    {
+        $id = $args['id'];
 
-    if (!$construction) {
-        return Render::render('errors/404', ["message" => "Construção não encontrada"]);
+        // Obtém a construção pelo ID
+        $construction = $this->construction_model->where('id', $id)->first();
+
+        if (!$construction) {
+            return Render::render('errors/404', ["message" => "Construção não encontrada"]);
+        }
+
+        // Renderiza a página de visualização (View)
+        return Render::render('Construction/View', ["construction" => $construction]);
     }
 
-    // Renderiza a página de visualização (View)
-    return Render::render('Construction/View', ["construction" => $construction]);
-}
-
-    public function store(ServerRequestInterface $request) {
+    public function store(ServerRequestInterface $request)
+    {
         $data = $request->getParsedBody();
 
-        $construction_validation  = new ConstructionValidation($data);
+        // $construction_validation  = new ConstructionValidation($data);
 
-        if($construction_validation->validation->fails()){
-            $errors = $construction_validation->validation->errors();
-            return new JsonResponse(["message" => "Erro ao salvar a construção", "status" => 503, "errors" => $errors->toArray()]);
-        }
+        // if ($construction_validation->validation->fails()) {
+        //     $errors = $construction_validation->validation->errors();
+        //     return new JsonResponse(["message" => "Erro ao salvar a construção", "status" => 503, "errors" => $errors->toArray()]);
+        // }
 
         $construction = $this->construction_model->create($data);
 
-        if(!$construction)
+        if (!$construction)
             return new JsonResponse(['message' => "Erro ao salvar a construção", "status" => 400]);
-        
-         return new JsonResponse(["message" => "Erro, construção não encontrada", "status" => 404]);
-        
+
+        return new JsonResponse(["message" => "Erro, construção não encontrada", "status" => 404]);
     }
 
-    public function edit(ServerRequestInterface $request, array $args) {
+    public function edit(ServerRequestInterface $request, array $args)
+    {
         $id = $args['id'];
         $construction = $this->construction_model->where('id', $id)->first();
 
@@ -83,84 +85,69 @@ class ConstructionController {
             return Render::render('errors/404', ["message" => "Construção não encontrada"]);
         }
 
-        return Render::render('Construction/Update', ["construction" => $construction]);
+        return Render::render('Construction/Edit', ["construction" => $construction]);
     }
 
     // Atualiza a construção
-    public function update(ServerRequestInterface $request, array $args) {
+    public function update(ServerRequestInterface $request, array $args)
+    {
         $data = $request->getParsedBody();
-        
         // Verifique se a construção existe
         $id = $args['id'];
         $construction = $this->construction_model->where('id', $id)->first();
-    
+
         if (!$construction) {
             return new JsonResponse(["message" => "Erro, construção não encontrada", "status" => 404]);
         }
-    
+
         // Atualize a construção com os dados recebidos
         $updated = $construction->update($data);
-    
+
         if (!$updated) {
             return new JsonResponse(["message" => "Erro ao atualizar a construção", "status" => 400]);
         }
-    
+
         return new JsonResponse(["message" => "Construção atualizada com sucesso", "status" => 200]);
     }
 
-    public function delete(ServerRequestInterface $request, array $args) {
+    public function delete(ServerRequestInterface $request, array $args)
+    {
         $id = $args['id'];
 
         $construction = $this->construction_model->where('id', $id)->first();
 
-        if(!$construction)
+        if (!$construction)
             return new JsonResponse(["message" => "Erro, construção não encontrada", "status" => 404]);
 
         $deleted = $construction->delete();
 
-        if(!$deleted)
+        if (!$deleted)
             return new JsonResponse(["message" => "Erro, construção não deletada", "status" => 400]);
 
         return new JsonResponse(["message" => "Construção deletada com sucesso", "status" => 200]);
     }
 
-    public function create() {
-        $constructions = Construction::with('user')->get();
+    public function create()
+    {
 
-        return Render::render('Construction/Create', ["constructions" => $constructions]);
+        $users = User::all();
 
+        return Render::render('Construction/Create', ["users" => $users]);
     }
 
-    public function showClient(ServerRequestInterface $request, array $args) {
-        $clientId = $args['client_id'];
-        
-        // Obtém as construções do cliente específico
-        $constructions = $this->construction_model->where('client_id', $clientId)->get();
-    
-        if ($constructions->isEmpty()) {
-            return Render::render('errors/404', ["message" => "Nenhuma construção encontrada para este cliente."]);
-        }
-    
-        // Renderiza a view com as construções do cliente
-        return Render::render('Construction/View', ["constructions" => $constructions]);
-    }
-    
 
     public function details(ServerRequestInterface $request, array $args)
-{
-    $id = $args['id'];
+    {
+        $id = $args['id'];
 
-    // Busca a construção pelo ID
-    $construction = $this->construction_model->where('id', $id)->first();
+        // Busca a construção pelo ID
+        $construction = $this->construction_model->where('id', $id)->first();
 
-    if (!$construction) {
-        return Render::render('errors/404', ["message" => "Construção não encontrada"]);
+        if (!$construction) {
+            return Render::render('errors/404', ["message" => "Construção não encontrada"]);
+        }
+
+        // Renderiza a view correta
+        return Render::render('Construction/Details', ["construction" => $construction]);
     }
-
-    // Renderiza a view correta
-    return Render::render('Construction/Details', ["construction" => $construction]);
-}
-
-    
-
 }

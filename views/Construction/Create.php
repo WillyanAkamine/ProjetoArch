@@ -3,8 +3,9 @@
 <section class="container mx-auto p-6">
     <h1 class="text-2xl font-bold mb-4">Criar Construção</h1>
     
+    
     <div class="bg-white shadow-md rounded-lg p-6">
-        <form action="/construction/create" method="POST" class="space-y-4">
+    <form id="construction-form" class="space-y-4">
             <!-- Título -->
             <div class="flex space-x-4">
                 <div class="w-full">
@@ -25,7 +26,7 @@
             <div class="flex space-x-4">
                 <div class="w-full">
                     <label for="cep" class="block text-sm font-medium text-gray-700">CEP</label>
-                    <input type="text" id="cep" name="cep" required
+                    <input type="text" id="zipcode" name="zipcode" required
                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
                 </div>
                 <div class="w-full">
@@ -49,17 +50,25 @@
                 </div>
             </div>
 
+            </div>
+                <div class="w-full">
+                    <label for="state" class="block text-sm font-medium text-gray-700">Progresso</label>
+                    <input type="number" id="progress" name="progress" required
+                           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                </div>
+            </div>
+
             <!-- Cliente -->
-            <!-- <div>
-                <label for="client" class="block text-sm font-medium text-gray-700">Cliente</label>
-                <select id="client" name="client" required
+            <div>
+                <label for="user_id" class="block text-sm font-medium text-gray-700">Cliente</label>
+                <select id="user_id" name="user_id" required
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                     <option value="">Selecione um cliente</option>
                     <?php foreach ($users as $user): ?>
                         <option value="<?= $user['id'] ?>"><?= $user['name'] ?></option>
                     <?php endforeach ?>
                 </select>
-            </div> -->
+            </div>
 
             <!-- Descrição -->
             <div>
@@ -71,7 +80,6 @@
             <!-- Botões -->
             <div class="flex space-x-4">
                 <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">
-                <a href="/obra/view">
                     Criar
                 </button>
                 <button type="reset" class="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700">

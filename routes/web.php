@@ -48,7 +48,8 @@ $router->group('/', function ($router) {
   $router->map('GET', '/obra/{id}', 'App\Controllers\ConstructionController::show');
   $router->map('GET', '/obra/{id}/details', 'App\Controllers\ConstructionController::details');
   $router->map('GET', '/obra/{id}/edit', 'App\Controllers\ConstructionController::edit');
-  $router->map('POST', '/obra/{id}/update', 'App\Controllers\ConstructionController::update'); // Use POST aqui, mas com o campo _method
+
+   // Use POST aqui, mas com o campo _method
 
 
 
@@ -77,6 +78,7 @@ $router->group('/api', function ($router) {
   $router->map('POST', '/obra', 'App\Controllers\ConstructionController::store');
   $router->map('POST', '/obra/{id}', 'App\Controllers\ConstructionController::update');
   $router->map('DELETE', '/obra/{id}', 'App\Controllers\ConstructionController::delete');
+  $router->map('POST', '/obra/{id}/update', 'App\Controllers\ConstructionController::update'); // Use POST aqui, mas com o campo _method
   
 
   $router->map('POST', '/notas/{client_id}', 'App\Controllers\NotesController::store');

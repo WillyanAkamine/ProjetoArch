@@ -4,15 +4,11 @@
     <h1 class="text-2xl font-bold mb-4">Atualizar Construção</h1>
     
     <div class="bg-white shadow-md rounded-lg p-6">
-    <input type="hidden" name="_method" value="PUT">
 
-        <form action="/construction/update/<?= htmlspecialchars($construction->id) ?>" method="POST" class="space-y-4">
+        <form id="construction-form" class="space-y-4">
+            <input type="text" hidden id="construction_id" name="construction_id" value="<?=$construction->id?>"/>
+
             
-            Adicione o token CSRF, se estiver utilizando
-            <!-- <input type="hidden" name="_token" value="<?= csrf_token() ?>"> -->
-            <!-- <input type="hidden" name="_method" value="PUT">
-
-            <-- Título -->
             <div class="flex space-x-4">
                 <div class="w-full">
                     <label for="title" class="block text-sm font-medium text-gray-700">Título</label>

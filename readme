@@ -27,3 +27,7 @@ git checkout -b nome_branch // Criar uma branch nova e ja desloca ela.
             PRIMARY KEY (`id`),
             FOREIGN KEY (`pdf_id`) REFERENCES pdf(`id`),
             FOREIGN KEY (`user_id`) REFERENCES users(`id`)
+
+
+            Ajustar Listagem de obra, tem que ser cliente e depois listar obras.
+            Ajustar relatorios de obra, pq tem que ser da obra e n pelo id do cliente
