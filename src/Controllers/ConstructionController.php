@@ -26,7 +26,6 @@ class ConstructionController {
 
         return Render::render('Construction/Index', ["constructions" => $constructions]);
 
-        return Render::render('Construction/Create', ["constructions" => $constructions]);
     }
 
     // public function show(ServerRequestInterface $request, array $args) {     
@@ -76,30 +75,37 @@ class ConstructionController {
         
     }
 
-    public function update(ServerRequestInterface $request, array $args) {
-        $data = $request->getParsedBody();
-        $construction_validation  = new ConstructionValidation($data);
-
-        if($construction_validation->validation->fails()){
-            $errors = $construction_validation->validation->errors();
-            return new JsonResponse(["message" => "Erro ao atulizar a construção", "status" => 503, "errors" => $errors->toArray()]);
-        }
-
+    public function edit(ServerRequestInterface $request, array $args) {
         $id = $args['id'];
-
         $construction = $this->construction_model->where('id', $id)->first();
 
-        if(!$construction){
+        if (!$construction) {
+            return Render::render('errors/404', ["message" => "Construção não encontrada"]);
+        }
+
+        return Render::render('Construction/Update', ["construction" => $construction]);
+    }
+
+    // Atualiza a construção
+    public function update(ServerRequestInterface $request, array $args) {
+        $data = $request->getParsedBody();
+        
+        // Verifique se a construção existe
+        $id = $args['id'];
+        $construction = $this->construction_model->where('id', $id)->first();
+    
+        if (!$construction) {
             return new JsonResponse(["message" => "Erro, construção não encontrada", "status" => 404]);
         }
-
+    
+        // Atualize a construção com os dados recebidos
         $updated = $construction->update($data);
-
-        if(!$updated) {
-            return new JsonResponse(["message" => "Erro, construção não atualizada", "status" => 400]);
+    
+        if (!$updated) {
+            return new JsonResponse(["message" => "Erro ao atualizar a construção", "status" => 400]);
         }
-
-        return new JsonResponse(["message" => "Construção atualizada", "status" => 200]);
+    
+        return new JsonResponse(["message" => "Construção atualizada com sucesso", "status" => 200]);
     }
 
     public function delete(ServerRequestInterface $request, array $args) {
@@ -139,6 +145,21 @@ class ConstructionController {
         return Render::render('Construction/View', ["constructions" => $constructions]);
     }
     
+
+    public function details(ServerRequestInterface $request, array $args)
+{
+    $id = $args['id'];
+
+    // Busca a construção pelo ID
+    $construction = $this->construction_model->where('id', $id)->first();
+
+    if (!$construction) {
+        return Render::render('errors/404', ["message" => "Construção não encontrada"]);
+    }
+
+    // Renderiza a view correta
+    return Render::render('Construction/Details', ["construction" => $construction]);
+}
 
     
 

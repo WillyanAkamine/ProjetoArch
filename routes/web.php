@@ -42,9 +42,14 @@ $router->map('GET', '/pdf/{dir}/{filename}', function ($request, array $args) {
 });
 
 $router->group('/', function ($router) {
-  $router->map('GET', '/obras', 'App\Controllers\ConstructionController');
+  $router->map('GET', '/obras', 'App\Controllers\ConstructionController::__invoke');
   $router->map('GET', '/obra/create', 'App\Controllers\ConstructionController::create');
-  $router->map('GET', '/obra/{client_id}', 'App\Controllers\ConstructionController::show');
+  $router->map('POST', '/obra/create', 'App\Controllers\ConstructionController::store'); // Adiciona a rota POST para criação
+  $router->map('GET', '/obra/{id}', 'App\Controllers\ConstructionController::show');
+  $router->map('GET', '/obra/{id}/details', 'App\Controllers\ConstructionController::details');
+  $router->map('GET', '/obra/{id}/edit', 'App\Controllers\ConstructionController::edit');
+  $router->map('POST', '/obra/{id}/update', 'App\Controllers\ConstructionController::update'); // Use POST aqui, mas com o campo _method
+
 
 
   $router->map('GET', '/orcamentos', 'App\Controllers\BudgetController');
