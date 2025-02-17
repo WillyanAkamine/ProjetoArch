@@ -3,6 +3,7 @@ const URL = 'http://localhost/api'; // URL do seu backend
 // Função para salvar uma nova obra ou editar uma existente
 const saveConstruction = async (formData) => {
     const constructionId = formData.get('construction_id');
+    console.log(constructionId);
     const url = constructionId ? `${URL}/obra/${constructionId}/update` : `${URL}/obra`;
     
     fetch(url, {
