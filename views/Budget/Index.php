@@ -1,34 +1,38 @@
 <?php $this->layout('templates/main', ['title' => 'Clientes', 'user' => $user]) ?>
 
 <section>
-    <div class="flex flex-column w-50 table-container bg-white shadow-lg rounded-lg overflow-hidden mx-auto">
-        <div class="flex w-100 justify-end">
-            <a class="btn btn-primary" href="orcamentos/solicitar">Solicitar Orçamento</a>
+    <div class="flex row gap-3 w-50 bg-white shadow-lg rounded-lg overflow-hidden mx-auto">
+        <h2 class="py-4 font-bold">Lista de Orçamentos</h2>
+
+        <div class="flex justify-end mt-40px">
+            <a href="/budget/create">
+                <img src="/public/icons/create.svg" class="w-[50px]" alt="Criar">
+            </a>
         </div>
-        <table class="table m-2">
+    </div>
+    <div class="flex w-50 table-container shadow-lg rounded-lg overflow-hidden mx-auto bg-[#212529] mt-[25px]">
+        <table class="table table-dark">
             <thead class="bg-blue-600 text-white">
                 <tr>
                     <th scope="col" class="px-4 py-2">#</th>
-                    <?php if ($user['role_id'] == 1) : ?>
-                        <th scope="col" class="px-4 py-2">Cliente</th>
-                    <?php endif ?>
-                    <th scope="col" class="px-4 py-2">Titulo</th>
-                    <th scope="col" class="px-4 py-2">Status</th>
+                    <th scope="col" class="px-4 py-2">Nome</th>
+                    <th scope="col" class="px-4 py-2">Obra</th>
+                    <th scope="col" class="px-4 py-2">Descrição</th>
                     <th scope="col" class="px-4 py-2">Ações</th>
                 </tr>
             </thead>
-
             <tbody class="bg-white divide-y divide-gray-200">
                 <?php foreach ($budgets as $budget) : ?>
                     <tr class="hover:bg-gray-100">
-                        <th scope="row" class="px-4 py-2"><?= $budget['id'] ?></th>
-                        <?php if ($user['role_id'] == 1) : ?>
-                            <th scope="row" class="px-4 py-2"><?= $budget['client']['name'] ?></th>
-                        <?php endif ?>
-                        <th scope="row" class="px-4 py-2"><?= $budget['title'] ?></th>
-                        <th scope="row" class="px-4 py-2"><?= $budget['accepted'] ? 'Aceito' : 'Pendente' ?></th>
+                        <td scope="row" class="px-4 py-2"><?= $budget['id'] ?></td>
+                        <td class="px-4 py-2"><?= $budget['user']['name'] ?></td>
+                        <td class="px-4 py-2"><?= $budget['title'] ?></td>
+                        <td class="px-4 py-2"><?= $budget['description'] ?></td>
                         <td class="px-4 py-2">
-                            <a class="btn btn-primary" href="/orcamentos/ver/<?= $budget['id'] ?>">Ver</a>
+                            <div class="flex gap-2">
+                                <a href="/budget/<?= $budget['id'] ?>/details"><img src="/public/icons/eye.svg" class="w-[35px]" alt="Vizualizar"></a>
+                                <a href="/budget/<?= $budget['id'] ?>/edit"><img src="/public/icons/edit.svg" class="w-[35px]" alt="Editar"></a>
+                            </div>
                         </td>
                     </tr>
                 <?php endforeach ?>
@@ -36,3 +40,7 @@
         </table>
     </div>
 </section>
+
+<?php $this->push('scripts') ?>
+<script src="/public/scripts/Budget.js"></script>
+<?php $this->end() ?>

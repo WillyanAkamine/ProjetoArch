@@ -170,4 +170,22 @@ class BudgetController
 
         return new JsonResponse(["message" => "Status do orçamento atualizado com sucesso!", "status" => 200]);
     }
+
+    public function edit(ServerRequestInterface $request, $args)
+{
+    $budget_id = $args['id'];
+    $budget = $this->budget->with(['materials'])->where('id', $budget_id)->firstOrFail();
+    $materials = Materials::all();  // Carrega todos os materiais disponíveis
+
+    return Render::render('Budget/Edit', ['budget' => $budget, 'materials' => $materials]);
+}
+
+// No BudgetController
+public function create()
+{
+    $materials = Materials::all();  // Carrega todos os materiais disponíveis
+    return Render::render('Budget/Create', ['materials' => $materials]);  // Passa os materiais para a view
+}
+
+
 }

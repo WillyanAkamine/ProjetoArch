@@ -91,6 +91,7 @@ $router->group('/api', function ($router) {
   $router->map('GET', '/orcamentos/editar/{id}', 'App\Controllers\BudgetController::edit');
   $router->map('PUT', '/orcamentos/atualizar/{id}', 'App\Controllers\BudgetController::update');
   $router->map('DELETE', '/orcamentos/deletar/{id}', 'App\Controllers\BudgetController::delete');
+  
 })->setStrategy($strategyJSON);
 
 
