@@ -5,7 +5,7 @@
         <h2 class="py-4 font-bold">Lista de Orçamentos</h2>
 
         <div class="flex justify-end mt-40px">
-            <a href="/budget/create">
+            <a href="/orcamentos/create">
                 <img src="/public/icons/create.svg" class="w-[50px]" alt="Criar">
             </a>
         </div>
