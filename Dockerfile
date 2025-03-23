@@ -17,6 +17,10 @@ COPY . /var/www/html/
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 777 /var/www/html
 
+RUN ./vendor/bin/doctrine-migrations migrate --no-interaction
+
+RUN php seed.php
+
 EXPOSE 80
 
 CMD ["apache2-foreground"]

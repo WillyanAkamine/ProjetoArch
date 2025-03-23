@@ -1,93 +1,102 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Criar Orçamento</title>
-    <link rel="stylesheet" href="path/to/your/css/style.css">
-    <script src="/public/scripts/Budget/Create.js" defer></script>
-</head>
-<body>
-    <h1>Criar Orçamento</h1>
+<?php $this->layout('templates/main', ['title' => 'Criar Orçamento', 'user' => $user]) ?>
 
-    <!-- Dados do Cliente -->
-    <section id="dados-cliente">
-        <h2>Dados do Cliente</h2>
-        <form id="budget-form">
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome">
-            <label for="endereco">Endereço:</label>
-            <input type="text" id="endereco" name="endereco">
-            <!-- Adicione outros campos conforme necessário -->
-            <input type="hidden" name="user_id" value="<?php echo $_SESSION['user']['id']; ?>">
+<section class="container mx-auto p-6">
+    <h1 class="text-2xl font-bold mb-4">Criar Orçamento</h1>
+
+    <div class="bg-white shadow-md rounded-lg p-6">
+        <form id="budget-form" class="space-y-4">
+            <!-- Cliente -->
+            <div>
+                <label for="user_id" class="block text-sm font-medium text-gray-700">Cliente</label>
+                <select id="user_id" name="user_id" required
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    <option value="">Selecione um cliente</option>
+                    <?php foreach ($users as $user): ?>
+                        <option value="<?= $user['id'] ?>"><?= $user['name'] ?></option>
+                    <?php endforeach ?>
+                </select>
+            </div>
+
+            <!-- Descrição -->
+            <div>
+                <label for="description" class="block text-sm font-medium text-gray-700">Descrição</label>
+                <textarea id="description" name="description" rows="3" required
+                          class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
+            </div>
+
+            <!-- Seção de Etapas -->
+            <h2 class="text-xl font-bold mt-6">Etapas da Construção</h2>
+            <div class="flex space-x-4">
+                <?php
+                $etapas = ['Fundação', 'Alvenaria', 'Elétrica', 'Hidráulica', 'Cobertura'];
+                foreach ($etapas as $etapa): ?>
+                    <button type="button" class="etapa-tab bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300"
+                            data-etapa="<?= strtolower($etapa) ?>">
+                        <?= $etapa ?>
+                    </button>
+                <?php endforeach; ?>
+            </div>
+
+            <!-- Lista de Materiais por Etapa -->
+            <div id="materiais-container" class="mt-4">
+                <?php foreach ($etapas as $etapa): ?>
+                    <div class="materiais-list hidden" id="materiais-<?= strtolower($etapa) ?>">
+                        <h3 class="text-lg font-semibold"><?= $etapa ?> - Materiais</h3>
+                        <table class="w-full mt-2 border">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="border px-2 py-1">Material</th>
+                                    <th class="border px-2 py-1">Quantidade</th>
+                                    <th class="border px-2 py-1">Preço Unitário</th>
+                                    <th class="border px-2 py-1">Total</th>
+                                    <th class="border px-2 py-1">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($materials as $material): ?>
+                                    <?php if ($material['etapa'] === strtolower($etapa)): ?>
+                                        <tr>
+                                            <td class="border px-2 py-1"><?= $material['name'] ?></td>
+                                            <td class="border px-2 py-1"><input type="number" min="1" class="w-16 border p-1"></td>
+                                            <td class="border px-2 py-1">R$ <?= number_format($material['price'], 2, ',', '.') ?></td>
+                                            <td class="border px-2 py-1">R$ 0,00</td>
+                                            <td class="border px-2 py-1"><button type="button" class="text-red-500">Remover</button></td>
+                                        </tr>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+
+            <!-- Botões -->
+            <div class="flex space-x-4 mt-4">
+                <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">
+                    Criar
+                </button>
+                <button type="reset" class="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700">
+                    Limpar
+                </button>
+            </div>
         </form>
-    </section>
-
-    <!-- Etapas da Obra e Categorias -->
-    <section id="etapas-obra">
-        <h2>Etapas da Obra</h2>
-        <div id="categorias">
-            <!-- Categorias dinâmicas serão adicionadas aqui via JS -->
-        </div>
-        <button type="button" id="adicionarCategoria">Adicionar Nova Categoria</button>
-    </section>
-
-    <!-- Tabela de Itens Orçados -->
-    <section id="itens-orcados">
-        <h2>Itens Orçados</h2>
-        <table id="orcamentoTable">
-            <thead>
-                <tr>
-                    <th>Etapa</th>
-                    <th>Material</th>
-                    <th>Quantidade</th>
-                    <th>Preço Unitário</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Linhas dinâmicas -->
-            </tbody>
-        </table>
-    </section>
-
-    <!-- Botões de Ação -->
-    <section id="acoes">
-        <button type="submit" form="budget-form">Salvar Orçamento</button>
-        <button type="reset" form="budget-form">Limpar Formulário</button>
-        <button type="button" id="adicionarItem">Adicionar Novo Item</button>
-    </section>
-
-    <!-- Modal para Adicionar Novo Item -->
-    <div id="modalAdicionarItem" class="modal" style="display:none;">
-        <div class="modal-content">
-            <h2>Adicionar Material</h2>
-            <form id="itemForm">
-                <label for="material">Material:</label>
-                <input type="text" id="material" name="material">
-                <label for="quantidade">Quantidade:</label>
-                <input type="number" id="quantidade" name="quantidade">
-                <!-- Outros campos conforme necessário -->
-            </form>
-            <button type="button" id="fecharModal">Fechar</button>
-            <button type="button" id="adicionarItemModal">Adicionar</button>
-        </div>
     </div>
+</section>
 
-    <!-- Modal para Adicionar Nova Categoria -->
-    <div id="modalAdicionarCategoria" class="modal" style="display:none;">
-        <div class="modal-content">
-            <h2>Adicionar Nova Categoria</h2>
-            <form id="categoriaForm">
-                <label for="nomeCategoria">Nome da Categoria:</label>
-                <input type="text" id="nomeCategoria" name="nomeCategoria">
-                <label for="itens">Itens:</label>
-                <textarea id="itens" name="itens" placeholder="Insira os itens, um por linha"></textarea>
-                <!-- Outros campos conforme necessário -->
-            </form>
-            <button type="button" id="fecharModalCategoria">Fechar</button>
-            <button type="button" id="adicionarCategoriaModal">Adicionar</button>
-        </div>
-    </div>
+<?php $this->push('scripts') ?>
+<script src="/public/scripts/Budget/Create.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const etapaTabs = document.querySelectorAll(".etapa-tab");
+        const materiaisSections = document.querySelectorAll(".materiais-list");
 
-</body>
-</html>
+        etapaTabs.forEach(tab => {
+            tab.addEventListener("click", () => {
+                const etapa = tab.dataset.etapa;
+                materiaisSections.forEach(section => section.classList.add("hidden"));
+                document.getElementById(`materiais-${etapa}`).classList.remove("hidden");
+            });
+        });
+    });
+</script>
+<?php $this->end() ?>

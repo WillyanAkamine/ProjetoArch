@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Budget;
 use App\Models\Materials;
+use App\Models\User;
 use App\Utils\Email;
 use App\Utils\File;
 use App\Utils\Render;
@@ -14,11 +15,13 @@ use Laminas\Diactoros\Response\JsonResponse;
 class BudgetController
 {
     private Budget $budget;
+    private User $user;
     private $construction;
 
     public function __construct()
     {
         $this->budget = new Budget();
+        $this->user = new User();
         $this->construction = $_SESSION['user'];  // Usuário logado
     }
 
@@ -144,7 +147,7 @@ class BudgetController
     {
         $budget_id = $args['id'];
         $budget = $this->budget->where('id', $budget_id)->firstOrFail();
-        
+
         // Faz upload do arquivo PDF
         $file = File::upload($request->getUploadedFiles(), 'pdf', 'Budget', $budget->user_id);
 
@@ -172,21 +175,24 @@ class BudgetController
     }
 
     public function edit(ServerRequestInterface $request, $args)
-{
-    $budget_id = $args['id'];
-    $budget = $this->budget->with(['materials'])->where('id', $budget_id)->firstOrFail();
-    $materials = Materials::all();  // Carrega todos os materiais disponíveis
+    {
+        $budget_id = $args['id'];
+        $budget = $this->budget->with(['materials'])->where('id', $budget_id)->firstOrFail();
+        $materials = Materials::all();  // Carrega todos os materiais disponíveis
 
-    return Render::render('Budget/Edit', ['budget' => $budget, 'materials' => $materials]);
-}
+        return Render::render('Budget/Edit', ['budget' => $budget, 'materials' => $materials]);
+    }
 
-// No BudgetController
-public function create()
-{
-    $materials = Materials::all();  // Carrega todos os materiais disponíveis
-    return Render::render('Budget/Create', ['materials' => $materials]);  // Passa os materiais para a view
-}
+    // No BudgetController
+    public function create()
+    {
+        $materials = Materials::all();  // Carrega todos os materiais disponíveis
+        $users = $this->user->where('role_id', "=", 2)->get();
 
+        return Render::render('Budget/Create', [
+            'materials' => $materials,
+            'users' => $users // Passa os clientes para a view
 
-
+        ]);
+    }
 }
