@@ -4,7 +4,7 @@
     <h1 class="text-2xl font-bold mb-4">Criar Orçamento</h1>
 
     <div class="bg-white shadow-md rounded-lg p-6">
-        <form id="budget-form" class="space-y-4">
+        <form id="budget-form" class="space-y-4" method="POST" action="/budget/create">
             <!-- Cliente -->
             <div>
                 <label for="user_id" class="block text-sm font-medium text-gray-700">Cliente</label>
@@ -28,7 +28,7 @@
             <h2 class="text-xl font-bold mt-6">Etapas da Construção</h2>
             <div class="flex space-x-4">
                 <?php
-                $etapas = ['Fundação', 'Alvenaria', 'Elétrica', 'Hidráulica', 'Cobertura'];
+                $etapas = ['Fundacao', 'Alvenaria', 'Eletrica', 'Hidraulica', 'Cobertura'];
                 foreach ($etapas as $etapa): ?>
                     <button type="button" class="etapa-tab bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300"
                             data-etapa="<?= strtolower($etapa) ?>">
@@ -54,12 +54,18 @@
                             </thead>
                             <tbody>
                                 <?php foreach ($materials as $material): ?>
-                                    <?php if ($material['etapa'] === strtolower($etapa)): ?>
+                                    <?php if (strtolower($material['category']) === strtolower($etapa)): ?>
                                         <tr>
                                             <td class="border px-2 py-1"><?= $material['name'] ?></td>
-                                            <td class="border px-2 py-1"><input type="number" min="1" class="w-16 border p-1"></td>
+                                            <td class="border px-2 py-1">
+                                                <input type="number" min="1" class="w-16 border p-1 quantidade-input"
+                                                       name="materials[<?= $material['id'] ?>][quantity]"
+                                                       data-price="<?= $material['price'] ?>">
+                                                <input type="hidden" name="materials[<?= $material['id'] ?>][id]" value="<?= $material['id'] ?>">
+                                                <input type="hidden" name="materials[<?= $material['id'] ?>][price]" value="<?= $material['price'] ?>">
+                                            </td>
                                             <td class="border px-2 py-1">R$ <?= number_format($material['price'], 2, ',', '.') ?></td>
-                                            <td class="border px-2 py-1">R$ 0,00</td>
+                                            <td class="border px-2 py-1 item-total">R$ 0,00</td>
                                             <td class="border px-2 py-1"><button type="button" class="text-red-500">Remover</button></td>
                                         </tr>
                                     <?php endif; ?>
@@ -95,6 +101,16 @@
                 const etapa = tab.dataset.etapa;
                 materiaisSections.forEach(section => section.classList.add("hidden"));
                 document.getElementById(`materiais-${etapa}`).classList.remove("hidden");
+            });
+        });
+
+        document.querySelectorAll('.quantidade-input').forEach(input => {
+            input.addEventListener('input', function() {
+                const preco = parseFloat(this.dataset.price);
+                const quantidade = parseInt(this.value) || 0;
+                const total = preco * quantidade;
+                this.closest('tr').querySelector('.item-total').textContent =
+                    'R$ ' + total.toFixed(2).replace('.', ',');
             });
         });
     });
