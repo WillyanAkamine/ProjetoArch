@@ -11,4 +11,8 @@ class Construction extends Model {
     public function user() {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+
+    public function budgets() {
+        return $this->hasMany(Budget::class, 'construction_id', 'id');
+    }
 }

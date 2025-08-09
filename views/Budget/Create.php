@@ -9,7 +9,7 @@
             <div>
                 <label for="user_id" class="block text-sm font-medium text-gray-700">Cliente</label>
                 <select id="user_id" name="user_id" required
-                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                     <option value="">Selecione um cliente</option>
                     <?php foreach ($users as $user): ?>
                         <option value="<?= $user['id'] ?>"><?= $user['name'] ?></option>
@@ -17,11 +17,35 @@
                 </select>
             </div>
 
+            <div class="mb-4">
+                <label for="construction_id" class="block text-sm font-medium text-gray-700">Obra</label>
+                <select id="construction_id" name="construction_id" required
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    <option value="">Selecione uma obra</option>
+                </select>
+            </div>
+
             <!-- Descrição -->
+            <div>
+                <label for="title" class="block text-sm font-medium text-gray-700">Titulo</label>
+                <input type="text" id="title" name="title" rows="3" required
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
+            </div>
             <div>
                 <label for="description" class="block text-sm font-medium text-gray-700">Descrição</label>
                 <textarea id="description" name="description" rows="3" required
-                          class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
+            </div>
+
+            <!-- Status -->
+            <div>
+                <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                <select id="status" name="status" required
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    <option value="Pendente">Pendente</option>
+                    <option value="Aceito">Aceito</option>
+                    <option value="Nao_aceito">Não aceito</option>
+                </select>
             </div>
 
             <!-- Seção de Etapas -->
@@ -31,7 +55,7 @@
                 $etapas = ['Fundacao', 'Alvenaria', 'Eletrica', 'Hidraulica', 'Cobertura'];
                 foreach ($etapas as $etapa): ?>
                     <button type="button" class="etapa-tab bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300"
-                            data-etapa="<?= strtolower($etapa) ?>">
+                        data-etapa="<?= strtolower($etapa) ?>">
                         <?= $etapa ?>
                     </button>
                 <?php endforeach; ?>
@@ -59,8 +83,8 @@
                                             <td class="border px-2 py-1"><?= $material['name'] ?></td>
                                             <td class="border px-2 py-1">
                                                 <input type="number" min="1" class="w-16 border p-1 quantidade-input"
-                                                       name="materials[<?= $material['id'] ?>][quantity]"
-                                                       data-price="<?= $material['price'] ?>">
+                                                    name="materials[<?= $material['id'] ?>][quantity]"
+                                                    data-price="<?= $material['price'] ?>">
                                                 <input type="hidden" name="materials[<?= $material['id'] ?>][id]" value="<?= $material['id'] ?>">
                                                 <input type="hidden" name="materials[<?= $material['id'] ?>][price]" value="<?= $material['price'] ?>">
                                             </td>

@@ -29,25 +29,13 @@ class ConstructionController
         return Render::render('Construction/Index', ["constructions" => $constructions]);
     }
 
-    // public function show(ServerRequestInterface $request, array $args) {     
-    //     $id = $args['id'];
-
-    //     $construction = $this->construction_model->where('id', $id)->first();
-
-    //     if(!$construction)
-    //         return new JsonResponse(['message' => "Erro, construção não encontrada", "status" => 404]);
-
-    //     return new JsonResponse(['construction' => $construction->getAttributes(), "status" => 200]);
-
-    // }
-
 
     public function show(ServerRequestInterface $request, array $args)
     {
         $id = $args['id'];
 
         // Obtém a construção pelo ID
-        $construction = $this->construction_model->where('id', $id)->first();
+        $construction = $this->construction_model->with('budgets')->where('id', $id)->first();
 
         if (!$construction) {
             return Render::render('errors/404', ["message" => "Construção não encontrada"]);
@@ -149,5 +137,23 @@ class ConstructionController
 
         // Renderiza a view correta
         return Render::render('Construction/Details', ["construction" => $construction]);
+    }
+
+    public function listByClient(ServerRequestInterface $request, array $args)
+    {
+        $clientId = $args['client_id'] ?? null;
+
+        if (!$clientId) {
+            return new JsonResponse(["message" => "ID do cliente não informado", "status" => 400]);
+        }
+
+        // Busca todas as construções do cliente
+        $constructions = $this->construction_model->where('user_id', $clientId)->get();
+
+        if ($constructions->isEmpty()) {
+            return new JsonResponse(["message" => "Nenhuma construção encontrada para este cliente", "status" => 404]);
+        }
+
+        return new JsonResponse(["constructions" => $constructions, "status" => 200]);
     }
 }

@@ -29,10 +29,12 @@ class BudgetController
     public function __invoke()
     {
         if ($this->construction['role_id'] == 1) {
-            $budgets = $this->budget->all();  // Administrador vê todos os orçamentos
+            $budgets = $this->budget->with('client')->get();  // Administrador vê todos os orçamentos
         } else {
-            $budgets = $this->budget->where('construction_id', $this->construction['id'])->get();  // Cliente vê apenas seus orçamentos
+            $budgets = $this->budget->with('client')->where('construction_id', $this->construction['id'])->get();  // Cliente vê apenas seus orçamentos
         }
+        var_dump($budgets[0]);
+        die;
 
         return Render::render('Budget/Index', ['budgets' => $budgets]);
     }
@@ -46,47 +48,39 @@ class BudgetController
 
     // Cria um novo orçamento com materiais, etapas e quantidades
     public function store(ServerRequestInterface $request)
-    {       
+    {
+        try {
             $data = $request->getParsedBody(); // ou $_POST
-            var_dump($data); die;
 
-        // Monta o array de materiais a partir do POST
-        $materialsArray = [];
-        foreach ($materials as $id => $material) {
-            $materialsArray[] = [
-                'material_id' => $material['id'],
-                'quantity'    => $material['quantity'],
-                'price'       => $material['price'],
-            ];
-        }
-
-        // Cria o orçamento
-        $budgetData = [
-            'user_id' => $data['user_id'] ?? null,
-            'description' => $data['description'] ?? '',
-            // outros campos da tabela budgets
-        ];
-        $budget = $this->budget->create($budgetData);
-        
-        if (!$budget) {
-            return new JsonResponse(["message" => "Erro ao salvar o orçamento", "status" => 400]);
-        }
-
-        // Associa os materiais ao orçamento
-        foreach ($materialsArray as $material) {
-            if (!empty($material['quantity']) && $material['quantity'] > 0) {
-                $budget->materials()->attach($material['material_id'], [
-                    'quantity' => $material['quantity'],
-                    'price'    => $material['price'],
-                ]);
+            // Calcula o valor total dos materiais
+            $total = 0;
+            foreach ($data['materials'] as $material) {
+                if (!empty($material['quantity']) && $material['quantity'] > 0) {
+                    $total += $material['quantity'] * $material['price'];
+                }
             }
-        }
 
-        if (empty($budgetData['user_id']) || empty($budgetData['description']) || empty($materialsArray)) {
-            return new JsonResponse(["message" => "Dados obrigatórios faltando", "status" => 400]);
-        }
+            // Cria o orçamento
+            $budget = $this->budget->create([...$data,'value' => $total]);
 
-        return new JsonResponse(["message" => "Orçamento criado com sucesso!", "status" => 201]);
+            if (!$budget) {
+                return new JsonResponse(["message" => "Erro ao salvar o orçamento", "status" => 400]);
+            }
+
+            // Associa os materiais ao orçamento
+            foreach ($data['materials'] as $material) {
+                if (!empty($material['quantity']) && $material['quantity'] > 0) {
+                    $budget->materials()->attach($material['id'], [
+                        'quantity' => $material['quantity'],
+                        'price'    => $material['price'],
+                    ]);
+                }
+            }
+
+            return new JsonResponse(["message" => "Orçamento criado com sucesso!", "status" => 201]);
+        } catch (\Exception $e) {
+            return new JsonResponse(["message" => "Erro ao salvar o orçamento: " . $e->getMessage(), "status" => 500]);
+        }
     }
 
     // Exibe um orçamento específico com materiais

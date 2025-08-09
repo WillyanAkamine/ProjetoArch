@@ -88,12 +88,14 @@ $router->group('/api', function ($router) {
   
   $router->map('GET', '/orcamentos', 'App\Controllers\BudgetController');
   $router->map('GET', '/orcamentos/solicitar', 'App\Controllers\BudgetController::request');
+  $router->map('POST', '/orcamentos/solicitar', 'App\Controllers\BudgetController::store');
 
   $router->map('GET', '/orcamentos/ver/{id}', 'App\Controllers\BudgetController::show');
   $router->map('GET', '/orcamentos/editar/{id}', 'App\Controllers\BudgetController::edit');
   $router->map('PUT', '/orcamentos/atualizar/{id}', 'App\Controllers\BudgetController::update');
   $router->map('DELETE', '/orcamentos/deletar/{id}', 'App\Controllers\BudgetController::delete');
   
+  $router->map('GET', '/construcoes/cliente/{client_id}', 'App\Controllers\ConstructionController::listByClient');
 })->setStrategy($strategyJSON);
 
 

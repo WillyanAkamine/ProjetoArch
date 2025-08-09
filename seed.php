@@ -77,7 +77,7 @@ try {
 
 //MATERIALS
 try {
-    $stmt = $pdo->prepare("INSERT INTO users (name, description, price, category) VALUES (?, ?, ?, ?)");
+    $stmt = $pdo->prepare("INSERT INTO materials (name, description, price, category) VALUES (?, ?, ?, ?)");
     $materials =[
         [
             'name' => 'Tijolo',
@@ -133,17 +133,11 @@ try {
             'price' => '28,00',
             'category' => CategoryEnum::Alvenaria
         ],
-        [
-            'name' => 'Porta de Madeira',
-            'description' => 'un',
-            'price' => '450,00',
-            'category' => CategoryEnum::Acabamento
-        ]
-    ]
-    
-    foreach ($users as $user) {
-        $stmt->execute([$user['name'], $user['email'], $user['password'], $user['role_id']]);
-        echo "Inserted user: ".$user['name']. "\n"; // Optional progress output
+    ];
+
+    foreach ($materials as $material) {
+        $stmt->execute([$material['name'], $material['description'], $material['price'], $material['category']]);
+        echo "Inserted material: ".$material['name']. "\n"; // Optional progress output
     }
 
     echo "Users inserted successfully!";

@@ -14,6 +14,6 @@ class Budget extends Model {
     }
 
     public function client() {
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

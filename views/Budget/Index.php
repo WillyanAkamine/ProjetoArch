@@ -25,7 +25,7 @@
                 <?php foreach ($budgets as $budget) : ?>
                     <tr class="hover:bg-gray-100">
                         <td scope="row" class="px-4 py-2"><?= $budget['id'] ?></td>
-                        <td class="px-4 py-2"><?= $budget['user']['name'] ?></td>
+                        <td class="px-4 py-2"><?= $budget['client']['name'] ?></td>
                         <td class="px-4 py-2"><?= $budget['title'] ?></td>
                         <td class="px-4 py-2"><?= $budget['description'] ?></td>
                         <td class="px-4 py-2">

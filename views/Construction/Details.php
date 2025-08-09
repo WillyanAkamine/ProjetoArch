@@ -7,77 +7,69 @@
     <div class="bg-white shadow-md rounded-lg p-6 mb-4">
         <h2 class="text-xl font-semibold mb-2"><?= htmlspecialchars($construction->title) ?></h2>
         <div class="space-y-4">
-            <div class="flex space-x-4">
-                <div class="w-full">
-                    <label for="start_date" class="block text-sm font-medium text-gray-700">Data Início</label>
-                    <input type="date" id="start_date" name="start_date" value="<?= htmlspecialchars($construction->start_date) ?>"
-                           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
-                </div>
-                <div class="w-full">
-                    <label for="end_date" class="block text-sm font-medium text-gray-700">Data Fim</label>
-                    <input type="date" id="end_date" name="end_date" value="<?= htmlspecialchars($construction->end_date) ?>"
-                           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
-                </div>
-            </div>
-
-            <div class="flex space-x-4">
-                <div class="w-full">
-                    <label for="address" class="block text-sm font-medium text-gray-700">Endereço</label>
-                    <input type="text" id="address" name="address" value="<?= htmlspecialchars($construction->address) ?>"
-                           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
-                </div>
-                <div class="w-full">
-                    <label for="zipcode" class="block text-sm font-medium text-gray-700">CEP</label>
-                    <input type="text" id="zipcode" name="zipcode" value="<?= htmlspecialchars($construction->zipcode) ?>"
-                           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
-                </div>
-            </div>
-
-            <div class="flex space-x-4">
-                <div class="w-full">
-                    <label for="neighborhood" class="block text-sm font-medium text-gray-700">Bairro</label>
-                    <input type="text" id="neighborhood" name="neighborhood" value="<?= htmlspecialchars($construction->neighborhood) ?>"
-                           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
-                </div>
-                <div class="w-full">
-                    <label for="city" class="block text-sm font-medium text-gray-700">Cidade</label>
-                    <input type="text" id="city" name="city" value="<?= htmlspecialchars($construction->city) ?>"
-                           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
-                </div>
-                <div class="w-full">
-                    <label for="state" class="block text-sm font-medium text-gray-700">Estado</label>
-                    <input type="text" id="state" name="state" value="<?= htmlspecialchars($construction->state) ?>"
-                           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
-                </div>
-            </div>
-
             <div>
-                <label for="description" class="block text-sm font-medium text-gray-700">Descrição</label>
-                <textarea id="description" name="description" rows="3" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"><?= htmlspecialchars($construction->description) ?></textarea>
-            </div>
+                <!-- TODO:: Colocar data inicio fim no cadastro. -->
 
+                <strong>Data Início:</strong> <?= htmlspecialchars($construction->start_date) ?>
+            </div>
+            <div>
+                <strong>Data Fim:</strong> <?= htmlspecialchars($construction->end_date) ?>
+            </div>
+            <div>
+                <strong>Endereço:</strong> <?= htmlspecialchars($construction->address) ?>
+            </div>
+            <div>
+                <strong>CEP:</strong> <?= htmlspecialchars($construction->zipcode) ?>
+            </div>
+            <div>
+                <strong>Bairro:</strong> <?= htmlspecialchars($construction->neighborhood) ?>
+            </div>
+            <div>
+                <strong>Cidade:</strong> <?= htmlspecialchars($construction->city) ?>
+            </div>
+            <div>
+                <strong>Estado:</strong> <?= htmlspecialchars($construction->state) ?>
+            </div>
+            <div>
+                <strong>Descrição:</strong> <?= htmlspecialchars($construction->description) ?>
+            </div>
             <div class="mb-4">
-                <label for="progress" class="block text-sm font-medium text-gray-700">Progresso geral</label>
-                <div class="relative pt-1">
-                    <div class="flex mb-2 items-center justify-between">
-                        <div>
-                            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200">
-                                <?= htmlspecialchars($construction->progress) ?>%
-                            </span>
-                        </div>
-                        <div class="text-right">
-                            <span class="text-xs font-semibold inline-block text-blue-600">
-                                Completo
-                            </span>
-                        </div>
-                    </div>
-                    <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-blue-200">
-                        <div style="width:<?= htmlspecialchars($construction->progress) ?>%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"></div>
-                    </div>
+                <strong>Progresso geral:</strong>
+                <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200">
+                    <?= htmlspecialchars($construction->progress) ?>%
+                </span>
+                <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-blue-200">
+                    <div style="width:<?= htmlspecialchars($construction->progress) ?>%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"></div>
                 </div>
             </div>
         </div>
     </div>
+
+    <table class="table table-dark">
+        <thead class="bg-blue-600 text-white">
+            <tr>
+                <th scope="col" class="px-4 py-2">#</th>
+                <th scope="col" class="px-4 py-2">Orçamento</th>
+                <th scope="col" class="px-4 py-2">Descrição</th>
+                <th scope="col" class="px-4 py-2">Ações</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            <?php foreach ($construction->budgets as $budget) : ?>
+                <tr class="hover:bg-gray-100">
+                    <td scope="row" class="px-4 py-2"><?= $budget['id'] ?></td>
+                    <td class="px-4 py-2"><?= $budget['title'] ?></td>
+                    <td class="px-4 py-2"><?= $budget['description'] ?></td>
+                    <td class="px-4 py-2">
+                        <div class="flex gap-2">
+                            <a href="/budget/<?= $budget['id'] ?>/details"><img src="/public/icons/eye.svg" class="w-[35px]" alt="Vizualizar"></a>
+                            <a href="/budget/<?= $budget['id'] ?>/edit"><img src="/public/icons/edit.svg" class="w-[35px]" alt="Editar"></a>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach ?>
+        </tbody>
+    </table>
     
     <!-- Cards para Relatórios -->
     <div class="bg-white shadow-md rounded-lg p-6">

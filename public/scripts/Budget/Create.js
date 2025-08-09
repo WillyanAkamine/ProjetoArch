@@ -2,9 +2,26 @@ const URL = 'http://localhost/api';
 
 // Função para salvar o orçamento
 const saveBudget = async (formData) => {
-    const user_id = formData.get('user_id');
+        // Filtra apenas os materiais com quantidade > 0
+    const filteredFormData = new FormData();
+    for (let [key, value] of formData.entries()) {
+        // Verifica se é campo de quantidade de material
+        if (key.includes('[quantity]')) {
+            if (parseInt(value) > 0) {
+                // Adiciona o campo de quantidade
+                filteredFormData.append(key, value);
+                // Adiciona os campos relacionados (id e price)
+                const baseKey = key.replace('[quantity]', '');
+                filteredFormData.append(`${baseKey}[id]`, formData.get(`${baseKey}[id]`));
+                filteredFormData.append(`${baseKey}[price]`, formData.get(`${baseKey}[price]`));
+            }
+        } else if (!key.startsWith('materials')) {
+            // Adiciona outros campos normalmente
+            filteredFormData.append(key, value);
+        }
+    }
 
-    fetch(`${URL}/orcamento/solicitar/${user_id}`, {
+    fetch(`${URL}/orcamentos/solicitar`, {
         method: 'POST',
         body: formData
     })
@@ -26,55 +43,24 @@ document.getElementById('budget-form').addEventListener('submit', async function
     await saveBudget(formData);
 });
 
-// Manipulação do modal de adicionar item
-document.getElementById('adicionarItem').addEventListener('click', function() {
-    document.getElementById('modalAdicionarItem').style.display = 'block';
-});
+document.getElementById('user_id').addEventListener('change', function() {
+    const clientId = this.value;
+    if (!clientId) return;
 
-// Fechar modal
-document.getElementById('fecharModal').addEventListener('click', function() {
-    document.getElementById('modalAdicionarItem').style.display = 'none';
-});
+    fetch(`${URL}/construcoes/cliente/${clientId}`)
+        .then(response => response.json())
+        .then(data => {
+            // Exemplo: exibe no console ou atualiza um select de obras
+            console.log(data.constructions);
 
-// Adicionar item no modal
-document.getElementById('adicionarItemModal').addEventListener('click', function() {
-    // Código para adicionar item na tabela
-    const table = document.getElementById('orcamentoTable').getElementsByTagName('tbody')[0];
-    const material = document.getElementById('material').value;
-    const quantidade = document.getElementById('quantidade').value;
-    const precoUnitario = 100; // Exemplo de preço unitário
-
-    const row = table.insertRow();
-    row.insertCell(0).innerHTML = 'Nome da Etapa'; // Atualize conforme necessário
-    row.insertCell(1).innerHTML = material;
-    row.insertCell(2).innerHTML = quantidade;
-    row.insertCell(3).innerHTML = precoUnitario;
-    row.insertCell(4).innerHTML = quantidade * precoUnitario;
-
-    document.getElementById('modalAdicionarItem').style.display = 'none';
-});
-
-// Manipulação do modal de adicionar categoria
-document.getElementById('adicionarCategoria').addEventListener('click', function() {
-    document.getElementById('modalAdicionarCategoria').style.display = 'block';
-});
-
-document.getElementById('fecharModalCategoria').addEventListener('click', function() {
-    document.getElementById('modalAdicionarCategoria').style.display = 'none';
-});
-
-document.getElementById('adicionarCategoriaModal').addEventListener('click', function() {
-    const nomeCategoria = document.getElementById('nomeCategoria').value;
-    const itens = document.getElementById('itens').value.split('\n');
-
-    const categoriaDiv = document.createElement('div');
-    categoriaDiv.innerHTML = `<h3>${nomeCategoria}</h3>`;
-    itens.forEach(item => {
-        const itemDiv = document.createElement('div');
-        itemDiv.innerHTML = `<p>${item}</p>`;
-        categoriaDiv.appendChild(itemDiv);
-    });
-    
-    document.getElementById('categorias').appendChild(categoriaDiv);
-    document.getElementById('modalAdicionarCategoria').style.display = 'none';
+            // Se quiser popular um select de obras:
+            const constructionSelect = document.getElementById('construction_id');
+            if (constructionSelect) {
+                constructionSelect.innerHTML = '<option value="">Selecione uma obra</option>';
+                data.constructions.forEach(construction => {
+                    constructionSelect.innerHTML += `<option value="${construction.id}">${construction.title}</option>`;
+                });
+            }
+        })
+        .catch(error => console.log(error));
 });
