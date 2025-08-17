@@ -33,8 +33,6 @@ class BudgetController
         } else {
             $budgets = $this->budget->with('client')->where('construction_id', $this->construction['id'])->get();  // Cliente vê apenas seus orçamentos
         }
-        var_dump($budgets[0]);
-        die;
 
         return Render::render('Budget/Index', ['budgets' => $budgets]);
     }
@@ -199,15 +197,65 @@ class BudgetController
     }
 
     // No BudgetController
-    public function create()
+    public function create(ServerRequestInterface $request)
     {
-        $materials = Materials::all();  // Carrega todos os materiais disponíveis
-        $users = $this->user->where('role_id', "=", 2)->get();
-
+        $users = User::all();
+        $materials = Materials::all();
+        $etapas = ['Fundacao', 'Alvenaria', 'Eletrica', 'Hidraulica', 'Cobertura'];
         return Render::render('Budget/Create', [
+            'users' => $users,
             'materials' => $materials,
-            'users' => $users // Passa os clientes para a view
-
+            'etapas' => $etapas
         ]);
+    }
+
+    // Orçamento rápido (consulta CSV/Siduscom/Sinap)
+    public function quickEstimate(ServerRequestInterface $request)
+    {
+        $data = $request->getParsedBody();
+        $tipoObra = strtolower(trim($data['tipo_obra']));
+        $padrao = strtolower(trim($data['padrao']));
+        $regiao = strtolower(trim($data['regiao']));
+        $area = floatval($data['area']);
+
+        $csvPath = __DIR__ . '/../../data/siduscom_base_detalhado.csv';
+        $result = null;
+
+        if (!file_exists($csvPath)) {
+            return new \Laminas\Diactoros\Response\JsonResponse([
+                "message" => "Arquivo de referência não encontrado."
+            ]);
+        }
+
+        $csv = array_map('str_getcsv', file($csvPath));
+        foreach ($csv as $i => $row) {
+            if ($i === 0) continue; // pula cabeçalho
+            if (
+                strtolower(trim($row[0])) == $tipoObra &&
+                strtolower(trim($row[1])) == $padrao &&
+                strtolower(trim($row[2])) == $regiao
+            ) {
+                $result = [
+                    "valor_m2_total" => floatval($row[3]),
+                    "mao_obra_m2" => floatval($row[4]),
+                    "material_m2" => floatval($row[5]),
+                    "adm_m2" => floatval($row[6]),
+                    "total" => floatval($row[3]) * $area,
+                    "mao_obra_total" => floatval($row[4]) * $area,
+                    "material_total" => floatval($row[5]) * $area,
+                    "adm_total" => floatval($row[6]) * $area,
+                    "message" => "Estimativa gerada com sucesso!"
+                ];
+                break;
+            }
+        }
+
+        if (!$result) {
+            $result = [
+                "message" => "Não encontrado na base de referência."
+            ];
+        }
+
+        return new \Laminas\Diactoros\Response\JsonResponse($result);
     }
 }

@@ -29,7 +29,9 @@
                 <?php foreach ($constructions as $construction) : ?>
                     <tr class="hover:bg-gray-100">
                         <td scope="row" class="px-4 py-2"><?= $user['id'] ?></td>
-                        <td class="px-4 py-2"><?= $construction['user']['name'] ?></td>
+                        <td class="px-4 py-2">
+                            <?= $budget->user->name ?? 'Não informado' ?>
+                        </td>
                         <td class="px-4 py-2"><?= $construction['title'] ?></td>
                         <td class="px-4 py-2"><?= $construction['description'] ?></td>
                         <td class="px-4 py-2">

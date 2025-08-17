@@ -99,6 +99,10 @@ $router->group('/api', function ($router) {
 })->setStrategy($strategyJSON);
 
 
+// Rota para orçamento rápido (API)
+$router->map('POST', '/api/orcamentos/rapido', 'App\Controllers\BudgetController::quickEstimate');
+
+
 $response = $router->dispatch($request);
 
 (new SapiEmitter)->emit($response);

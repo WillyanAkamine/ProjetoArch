@@ -15,7 +15,6 @@
             <thead class="bg-blue-600 text-white">
                 <tr>
                     <th scope="col" class="px-4 py-2">#</th>
-                    <th scope="col" class="px-4 py-2">Nome</th>
                     <th scope="col" class="px-4 py-2">Obra</th>
                     <th scope="col" class="px-4 py-2">Descrição</th>
                     <th scope="col" class="px-4 py-2">Ações</th>
@@ -25,7 +24,6 @@
                 <?php foreach ($budgets as $budget) : ?>
                     <tr class="hover:bg-gray-100">
                         <td scope="row" class="px-4 py-2"><?= $budget['id'] ?></td>
-                        <td class="px-4 py-2"><?= $budget['client']['name'] ?></td>
                         <td class="px-4 py-2"><?= $budget['title'] ?></td>
                         <td class="px-4 py-2"><?= $budget['description'] ?></td>
                         <td class="px-4 py-2">
