@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Construction;
 use App\Models\Cost;
 use App\Utils\Render;
 use App\Models\PDF;
@@ -14,6 +15,7 @@ class CostController
   private $cost_model;
   private $user;
   private $client_id;
+  private $construction_id;
 
   public function __construct()
   {
@@ -29,7 +31,10 @@ class CostController
 
   public function show($request, array $args){
     $this->client_id = $args['client_id'];  
-    $documents = $documents = PDF::where(['user_id' => $this->client_id, 'category' => 'Cost'])->get();
+    $construction = Construction::where('user_id', $this->client_id)->first();
+    $this->construction_id = $construction ? $construction->id : null;
+
+    $documents = PDF::where(['user_id' => $this->client_id, 'category' => 'Cost'])->get();
 
     return Render::render('Cost/Show', [
       'documents' => $documents, 
@@ -42,13 +47,13 @@ class CostController
 
   private function getCosts()
   {
-    $costs = $this->cost_model->orderBy('date', 'DESC')->where("user_id", $this->client_id)->get();
-
-    if (!$costs) {
+    if (!$this->construction_id) {
       return [];
     }
 
-    return $costs;
+    $costs = $this->cost_model->orderBy('created_at', 'DESC')->where('construction_id', $this->construction_id)->get();
+
+    return $costs ?: [];
   }
 
   private function calcCost()
@@ -70,19 +75,29 @@ class CostController
       $total['total'] += $cost->labor + $cost->equip + $cost->third + $cost->adm;
     }
 
-      $total['labor'] = $cost->labor ? number_format($cost->labor, 2, ',', '.') : 0 ;
-      $total['equip'] = $cost->equip ? number_format($cost->equip, 2, ',', '.'): 0 ;
-      $total['third'] = $cost->third ? number_format($cost->third, 2, ',', '.'): 0 ;
-      $total['adm'] = $cost->adm ? number_format($cost->adm, 2, ',', '.'): 0;
-      $total['total'] = $cost->labor + $cost->equip + $cost->third + $cost->adm ? number_format($cost->labor + $cost->equip + $cost->third + $cost->adm, 2, ',', '.'): 0;
-
-    return $total;
+    return [
+      'labor' => number_format($total['labor'], 2, ',', '.'),
+      'equip' => number_format($total['equip'], 2, ',', '.'),
+      'third' => number_format($total['third'], 2, ',', '.'),
+      'adm' => number_format($total['adm'], 2, ',', '.'),
+      'total' => number_format($total['total'], 2, ',', '.')
+    ];
   }
 
   private function getLastCost()
   {
-    $last_cost = $this->cost_model->where("user_id", $this->client_id)
-      ->orderBy('date', 'DESC')
+    if (!$this->construction_id) {
+      return [
+        'date' => null,
+        'labor' => 0,
+        'equip' => 0,
+        'third' => 0,
+        'adm' => 0,
+      ];
+    }
+
+    $last_cost = $this->cost_model->where('construction_id', $this->construction_id)
+      ->orderBy('created_at', 'DESC')
       ->first();
 
     if (!$last_cost) {
@@ -96,7 +111,7 @@ class CostController
     }
 
     return [
-      'date' => $last_cost['date'],
+      'date' => $last_cost['created_at'],
       'labor' => number_format($last_cost['labor'], 2, ',', '.'),
       'equip' => number_format($last_cost['equip'], 2, ',', '.'),
       'third' => number_format($last_cost['third'], 2, ',', '.'),
@@ -106,11 +121,21 @@ class CostController
 
   public function store(ServerRequestInterface $request, array $args)
   {
-    File::upload($request->getUploadedFiles(), 'pdf', 'Cost', $args['client_id']);
-    $inserted = $this->cost_model->insert($request->getParsedBody());
+    $clientId = $args['client_id'];
+    $construction = Construction::where('user_id', $clientId)->first();
+
+    if (!$construction) {
+      return ["message" => "Construção não encontrada para este cliente."];
+    }
+
+    File::upload($request->getUploadedFiles(), 'pdf', 'Cost', $clientId);
+    $data = $request->getParsedBody();
+    $data['construction_id'] = $construction->id;
+
+    $inserted = $this->cost_model->create($data);
 
     if (!$inserted) {
-      return ["message" => "Erro ao deletar!"];
+      return ["message" => "Erro ao salvar o custo da obra."];
     }
 
     return ["message" => "Sucesso ao salvar o relatorio de custo da obra!"];

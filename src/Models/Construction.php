@@ -9,10 +9,22 @@ class Construction extends Model {
     protected $table = "constructions";
 
     public function user() {
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function budgets() {
         return $this->hasMany(Budget::class, 'construction_id', 'id');
     }
-}
+
+    public function schedules() {
+        return $this->hasMany(Schedule::class, 'construction_id', 'id');
+    }
+
+    public function notes() {
+        return $this->hasMany(Notes::class, 'construction_id', 'id');
+    }
+
+    public function costs() {
+        return $this->hasMany(Cost::class, 'construction_id', 'id');
+    }
+}    

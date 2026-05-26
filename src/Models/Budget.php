@@ -13,7 +13,7 @@ class Budget extends Model {
         return $this->hasOne(PDF::class, 'id', 'pdf_id');
     }
 
-    public function client() {
-        return $this->belongsTo(User::class, 'user_id');
+    public function construction() {
+        return $this->belongsTo(Construction::class, 'construction_id', 'id');
     }
 }

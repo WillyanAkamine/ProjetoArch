@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Budget;
+use App\Models\Construction;
 use App\Models\Materials;
 use App\Models\User;
 use App\Utils\Email;
@@ -29,9 +30,10 @@ class BudgetController
     public function __invoke()
     {
         if ($this->construction['role_id'] == 1) {
-            $budgets = $this->budget->with('client')->get();  // Administrador vê todos os orçamentos
+            $budgets = $this->budget->with('construction')->get();
         } else {
-            $budgets = $this->budget->with('client')->where('construction_id', $this->construction['id'])->get();  // Cliente vê apenas seus orçamentos
+            $constructionIds = Construction::where('user_id', $this->construction['id'])->pluck('id')->toArray();
+            $budgets = $this->budget->with('construction')->whereIn('construction_id', $constructionIds)->get();
         }
 
         return Render::render('Budget/Index', ['budgets' => $budgets]);
@@ -85,13 +87,18 @@ class BudgetController
     public function show(ServerRequestInterface $request, $args)
     {
         $budget_id = $args['id'];
-        $budget = $this->budget->with(['materials'])->where('id', $budget_id)->firstOrFail();
+        $budget = $this->budget->with(['materials', 'construction'])->where('id', $budget_id)->firstOrFail();
 
         if ($this->construction['role_id'] == 1) {
             return Render::render('Budget/Admin/Show', ["budget" => $budget]);
-        } else {
-            return Render::render('Budget/Client/Show', ["budget" => $budget]);
         }
+
+        $constructionIds = Construction::where('user_id', $this->construction['id'])->pluck('id')->toArray();
+        if (!in_array($budget->construction_id, $constructionIds, true)) {
+            return new JsonResponse(["message" => "Acesso negado", "status" => 403]);
+        }
+
+        return Render::render('Budget/Client/Show', ["budget" => $budget]);
     }
 
     // Atualiza um orçamento e seus materiais

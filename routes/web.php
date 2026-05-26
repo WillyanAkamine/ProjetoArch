@@ -46,8 +46,12 @@ $router->group('/', function ($router) {
   $router->map('GET', '/obra/create', 'App\Controllers\ConstructionController::create');
   $router->map('POST', '/obra/create', 'App\Controllers\ConstructionController::store'); // Adiciona a rota POST para criação
   $router->map('GET', '/obra/{id}', 'App\Controllers\ConstructionController::show');
+  $router->map('POST', '/obra/{id}/schedule', 'App\Controllers\ScheduleController::store');
+  $router->map('POST', '/obra/{id}/note', 'App\Controllers\NotesController::store');
+  $router->map('GET', '/obra/{id}/report', 'App\Controllers\ReportController::constructionReport');
   $router->map('GET', '/obra/{id}/details', 'App\Controllers\ConstructionController::details');
   $router->map('GET', '/obra/{id}/edit', 'App\Controllers\ConstructionController::edit');
+  $router->map('GET', '/obra/{id}/delete', 'App\Controllers\ConstructionController::delete');
   $router->map('GET', '/orcamentos/create', 'App\Controllers\BudgetController::create');
   $router->map('POST', '/orcamentos/create', 'App\Controllers\BudgetController::store');
 

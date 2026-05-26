@@ -36,7 +36,7 @@
                         <td class="px-4 py-2"><?= $construction['description'] ?></td>
                         <td class="px-4 py-2">
                         <div class="flex gap-2">
-                        <a href="/obra/<?= $construction['id'] ?>/details"><img src="/public/icons/eye.svg" class="w-[35px]" alt="Vizualizar"></a>
+                        <a href="/obra/<?= $construction['id'] ?>"><img src="/public/icons/eye.svg" class="w-[35px]" alt="Vizualizar"></a>
                         <a href="/obra/<?= $construction['id'] ?>/edit"><img src="/public/icons/edit.svg" class="w-[35px]" alt="Editar"></a>
                         </div>
                         </td>

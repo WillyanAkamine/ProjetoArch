@@ -11,6 +11,7 @@ use Exception;
 use Psr\Http\Message\ServerRequestInterface;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\JsonResponse;
+use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ResponseInterface;
 
 class ConstructionController
@@ -34,14 +35,16 @@ class ConstructionController
     {
         $id = $args['id'];
 
-        // Obtém a construção pelo ID
-        $construction = $this->construction_model->with('budgets')->where('id', $id)->first();
+        // Obtém a construção pelo ID com relacionamentos necessários
+        $construction = $this->construction_model
+            ->with(['budgets', 'schedules', 'notes.pdf', 'costs'])
+            ->where('id', $id)
+            ->first();
 
         if (!$construction) {
             return Render::render('errors/404', ["message" => "Construção não encontrada"]);
         }
 
-        // Renderiza a página de visualização (View)
         return Render::render('Construction/View', ["construction" => $construction]);
     }
 
@@ -49,19 +52,13 @@ class ConstructionController
     {
         $data = $request->getParsedBody();
 
-        // $construction_validation  = new ConstructionValidation($data);
-
-        // if ($construction_validation->validation->fails()) {
-        //     $errors = $construction_validation->validation->errors();
-        //     return new JsonResponse(["message" => "Erro ao salvar a construção", "status" => 503, "errors" => $errors->toArray()]);
-        // }
-
         $construction = $this->construction_model->create($data);
 
-        if (!$construction)
+        if (!$construction) {
             return new JsonResponse(['message' => "Erro ao salvar a construção", "status" => 400]);
+        }
 
-        return new JsonResponse(["message" => "Erro, construção não encontrada", "status" => 404]);
+        return new JsonResponse(["message" => "Construção criada com sucesso", "status" => 201, "construction" => $construction]);
     }
 
     public function edit(ServerRequestInterface $request, array $args)
@@ -109,8 +106,13 @@ class ConstructionController
 
         $deleted = $construction->delete();
 
-        if (!$deleted)
+        if (!$deleted) {
             return new JsonResponse(["message" => "Erro, construção não deletada", "status" => 400]);
+        }
+
+        if ($request->getMethod() === 'GET') {
+            return new RedirectResponse('/obras');
+        }
 
         return new JsonResponse(["message" => "Construção deletada com sucesso", "status" => 200]);
     }

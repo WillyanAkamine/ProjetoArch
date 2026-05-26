@@ -22,9 +22,13 @@ class AuthController {
       "name" => $login_info["name"], 
       "password" => $login_info["password"]
     ])->first();
- 
+
+    if (!$cliente) {
+        return new RedirectResponse('/login');
+    }
+
     $_SESSION["user"] = $cliente->getAttributes();
-      
+
     return new RedirectResponse('/');
   }
 
