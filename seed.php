@@ -78,62 +78,62 @@ try {
 //MATERIALS
 try {
     $stmt = $pdo->prepare("INSERT INTO materials (name, description, price, category) VALUES (?, ?, ?, ?)");
-    $materials =[
-        [
-            'name' => 'Tijolo',
-            'description' => 'un',
-            'price' => '1,50',
-            'category' => CategoryEnum::Alvenaria
-        ],
-        [
-            'name' => 'Bloco de Concreto',
-            'description' => 'un',
-            'price' => '3,00',
-            'category' => CategoryEnum::Alvenaria
-        ],
-        [
-            'name' => 'Vergalhão 8mm',
-            'description' => 'barra',
-            'price' => '35,00',
-            'category' => CategoryEnum::Fundacao
-        ],
-        [
-            'name' => 'Cal Hidratada',
-            'description' => 'saco 20kg',
-            'price' => '20,00',
-            'category' => CategoryEnum::Alvenaria
-        ],
-        [
-            'name' => 'Tubulação PVC 100mm',
-            'description' => 'm',
-            'price' => '25,00',
-            'category' => CategoryEnum::Hidraulica
-        ],
-        [
-            'name' => 'Fio Elétrico 2,5mm',
-            'description' => 'rolo 100m',
-            'price' => '250,00',
-            'category' => CategoryEnum::Eletrica
-        ],
-        [
-            'name' => 'Caixa de Passagem 4x4',
-            'description' => 'un',
-            'price' => '5,00',
-            'category' => CategoryEnum::Eletrica
-        ],
-        [
-            'name' => 'Telha de Cerâmica',
-            'description' => 'un',
-            'price' => '3,50',
-            'category' => CategoryEnum::Cobertura
-        ],
-        [
-            'name' => 'Argamassa ACIII',
-            'description' => 'saco 20kg',
-            'price' => '28,00',
-            'category' => CategoryEnum::Alvenaria
-        ],
-    ];
+$materials = [
+    [
+        'name' => 'Tijolo',
+        'description' => 'un',
+        'price' => '1.50',
+        'category' => CategoryEnum::Alvenaria->value
+    ],
+    [
+        'name' => 'Bloco de Concreto',
+        'description' => 'un',
+        'price' => '3.00',
+        'category' => CategoryEnum::Alvenaria->value
+    ],
+    [
+        'name' => 'Vergalhão 8mm',
+        'description' => 'barra',
+        'price' => '35.00',
+        'category' => CategoryEnum::Fundacao->value
+    ],
+    [
+        'name' => 'Cal Hidratada',
+        'description' => 'saco 20kg',
+        'price' => '20.00',
+        'category' => CategoryEnum::Alvenaria->value
+    ],
+    [
+        'name' => 'Tubulação PVC 100mm',
+        'description' => 'm',
+        'price' => '25.00',
+        'category' => CategoryEnum::Hidraulica->value
+    ],
+    [
+        'name' => 'Fio Elétrico 2,5mm',
+        'description' => 'rolo 100m',
+        'price' => '250.00',
+        'category' => CategoryEnum::Eletrica->value
+    ],
+    [
+        'name' => 'Caixa de Passagem 4x4',
+        'description' => 'un',
+        'price' => '5.00',
+        'category' => CategoryEnum::Eletrica->value
+    ],
+    [
+        'name' => 'Telha de Cerâmica',
+        'description' => 'un',
+        'price' => '3.50',
+        'category' => CategoryEnum::Cobertura->value
+    ],
+    [
+        'name' => 'Argamassa ACIII',
+        'description' => 'saco 20kg',
+        'price' => '28.00',
+        'category' => CategoryEnum::Alvenaria->value
+    ],
+];
 
     foreach ($materials as $material) {
         $stmt->execute([$material['name'], $material['description'], $material['price'], $material['category']]);
