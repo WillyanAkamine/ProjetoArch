@@ -17,16 +17,9 @@ COPY . /var/www/html/
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 777 /var/www/html
 
-<<<<<<< Updated upstream
-RUN ./vendor/bin/doctrine-migrations migrate --no-interaction
-
-RUN php seed.php
-=======
 COPY entrypoint.sh /entrypoint.sh
 RUN dos2unix /entrypoint.sh && chmod +x /entrypoint.sh
->>>>>>> Stashed changes
 
 EXPOSE 80
 
-# ✅ ENTRYPOINT em vez de CMD
 ENTRYPOINT ["bash", "/entrypoint.sh"]

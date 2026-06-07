@@ -33,7 +33,7 @@ services:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
-    healthcheck:                        # ✅ verifica quando o MySQL está pronto
+    healthcheck:                        # verifica quando o MySQL está pronto
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-padmin"]
       interval: 5s
       timeout: 5s
