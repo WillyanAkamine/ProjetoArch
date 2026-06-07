@@ -86,6 +86,9 @@
                     <select id="construction_id" name="construction_id" required
                         class="mt-1 block w-full border-gray-300 rounded-md">
                         <option value="">Selecione uma obra</option>
+                        <?php foreach ($constructions as $construction): ?>
+                        <option value="<?= $construction['id'] ?>"><?= $construction['title'] ?></option>
+                        <?php endforeach ?>
                     </select>
                 </div>
             </div>

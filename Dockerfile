@@ -1,9 +1,9 @@
 FROM php:8.1-apache
 
-#Composer
 RUN apt-get update && apt-get install -y \
     unzip \
     git \
+    dos2unix \
     && rm -rf /var/lib/apt/lists/*
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -17,10 +17,9 @@ COPY . /var/www/html/
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 777 /var/www/html
 
-RUN ./vendor/bin/doctrine-migrations migrate --no-interaction
-
-RUN php seed.php
+COPY entrypoint.sh /entrypoint.sh
+RUN dos2unix /entrypoint.sh && chmod +x /entrypoint.sh
 
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+ENTRYPOINT ["bash", "/entrypoint.sh"]

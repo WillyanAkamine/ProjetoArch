@@ -209,10 +209,12 @@ class BudgetController
         $users = User::all();
         $materials = Materials::all();
         $etapas = ['Fundacao', 'Alvenaria', 'Eletrica', 'Hidraulica', 'Cobertura'];
+        $constructions = Construction::all()->toArray();
         return Render::render('Budget/Create', [
             'users' => $users,
             'materials' => $materials,
-            'etapas' => $etapas
+            'etapas' => $etapas,
+            'constructions' => $constructions,
         ]);
     }
 
