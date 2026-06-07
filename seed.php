@@ -144,3 +144,66 @@ $materials = [
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
+
+//OBRAS
+try {
+    $stmt = $pdo->prepare("
+        INSERT INTO constructions (title, description, progress, address, zipcode, neighborhood, city, state, user_id)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ");
+
+    $constructions = [
+        [
+            'title'        => 'Residência Will',
+            'description'  => 'Construção de residência unifamiliar',
+            'progress'     => '0%',
+            'address'      => 'Rua das Flores, 123',
+            'zipcode'      => '86010-100',
+            'neighborhood' => 'Centro',
+            'city'         => 'Londrina',
+            'state'        => 'PR',
+            'user_id'      => 1
+        ],
+        [
+            'title'        => 'Obra Admin',
+            'description'  => 'Construção de edifício comercial',
+            'progress'     => '50%',
+            'address'      => 'Av. Paulista, 1000',
+            'zipcode'      => '01310-100',
+            'neighborhood' => 'Bela Vista',
+            'city'         => 'São Paulo',
+            'state'        => 'SP',
+            'user_id'      => 2
+        ],
+        [
+            'title'        => 'Galpão Industrial',
+            'description'  => 'Construção de galpão para armazenagem',
+            'progress'     => '25%',
+            'address'      => 'Rua Industrial, 500',
+            'zipcode'      => '86070-200',
+            'neighborhood' => 'Distrito Industrial',
+            'city'         => 'Londrina',
+            'state'        => 'PR',
+            'user_id'      => 3
+        ],
+    ];
+
+    foreach ($constructions as $construction) {
+        $stmt->execute([
+            $construction['title'],
+            $construction['description'],
+            $construction['progress'],
+            $construction['address'],
+            $construction['zipcode'],
+            $construction['neighborhood'],
+            $construction['city'],
+            $construction['state'],
+            $construction['user_id'],
+        ]);
+        echo "Inserted construction: " . $construction['title'] . "\n";
+    }
+
+    echo "Constructions inserted successfully!\n";
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
+}
